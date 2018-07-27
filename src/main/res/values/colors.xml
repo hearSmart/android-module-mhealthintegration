@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /**
+  ~  * Copyright (c) 2017 hearX Group (Pty) Ltd. All rights reserved
+  ~  * Created by David Howe
+  ~  * hearX Group (Pty) Ltd.
+  ~  * info@hearxgroup.com
+  ~  */
+  -->
+
+<resources>
+
+    <color name="colorCharcoal">#353a40</color>
+    <color name="colorTransparent">#00000000</color>
+
+</resources>

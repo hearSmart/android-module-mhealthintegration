@@ -1,0 +1,238 @@
+<resources>
+    <string name="app_name">android-module-hearx</string>
+
+    <!-- DIALOG TITLES -->
+    <string name="dialog_title_error">ERROR</string>
+    <string name="dialog_title_please_select">PLEASE SELECT AN OPTION</string>
+    <string name="dialog_title_warning">WARNING</string>
+    <string name="dialog_title_please_wait">PLEASE WAIT</string>
+    <string name="dialog_title_logout">SIGNOUT</string>
+    <string name="dialog_title_success">SUCCESS</string>
+    <string name="dialog_title_info">INFO</string>
+    <string name="dialog_title_note">NOTE</string>
+    <string name="dialog_title_confirm">CONFIRM</string>
+    <string name="dialog_title_another_test">ANOTHER TEST?</string>
+    <string name="dialog_title_confirm_signout">CONFIRM SIGNOUT</string>
+    <string name="dialog_title_licenses">LICENSES</string>
+    <string name="dialog_title_select_scan_mode">LICENSES</string>
+    <string name="dialog_title_confirm_mode">SELECT MODE</string>
+    <string name="dialog_title_enter_serial">ENTER SERIAL</string>
+
+    <!-- DIALOG OPTIONS -->
+    <string name="dialog_option_ok">OK</string>
+    <string name="dialog_option_yes">YES</string>
+    <string name="dialog_option_no">NO</string>
+    <string name="dialog_option_cancel">CANCEL</string>
+    <string name="dialog_option_continue">CONTINUE</string>
+    <string name="dialog_option_not_now">NOT NOW</string>
+    <string name="dialog_option_install">INSTALL</string>
+    <string name="dialog_option_scan_qr">SCAN QRCODE</string>
+    <string name="dialog_option_enter_serial">ENTER SERIAL</string>
+
+    <!-- PROGRESS DIALOG TEXT -->
+    <string name="progress_title_please_wait">PLEASE WAIT</string>
+    <string name="progress_text_signing_in">Signing in...</string>
+    <string name="progress_text_saving_facility">Saving facility...</string>
+    <string name="progress_text_saving_patient">Saving patient...</string>
+    <string name="progress_text_saving_test">Saving test...</string>
+
+    <!-- SUPPORTED HEADPHONE MODELS -->
+    <string name="Headphone_Model_HD_202">Sennheiser_HD_202</string>
+    <string name="Headphone_Model_HD_280">Sennheiser_HD_280</string>
+    <string name="Headphone_Model_HDA_300">Sennheiser_HDA_300</string>
+
+    <!-- COMMANDS TEXT CAPS -->
+    <string name="text_back_caps">BACK</string>
+    <string name="text_prev_caps">PREV</string>
+    <string name="text_next_caps">NEXT</string>
+    <string name="text_notes_caps">NOTES</string>
+    <string name="text_done_caps">DONE</string>
+    <string name="text_go">GO</string>
+    <string name="text_scan_qr">SCAN QR CODE</string>
+    <string name="text_start_scan">START SCAN</string>
+
+    <!-- GENERAL TEXT -->
+    <string name="text_show_optional_fields">Show Optional Fields</string>
+    <string name="text_optional_fields">Optional Fields</string>
+    <string name="text_anonymous">Anonymous</string>
+    <string name="text_invalid_birthyear">Invalid birthyear</string>
+    <string name="text_invalid_month">Invalid month</string>
+    <string name="text_invalid_day">Invalid day</string>
+    <string name="text_invalid_date">Invalid date</string>
+    <string name="text_no">no</string>
+    <string name="text_yes">yes</string>
+    <string name="text_unsure">unsure</string>
+    <string name="text_headphone_serial_number">Headphone Serial Number</string>
+
+
+    <!--ACUITY LEVELS FOR EYE TESTS-->
+    <string-array name="acuity_test_levels_full">
+        <item>1.0</item>
+        <item>0.9</item>
+        <item>0.8</item>
+        <item>0.7</item>
+        <item>0.6</item>
+        <item>0.5</item>
+        <item>0.4</item>
+        <item>0.3</item>
+        <item>0.2</item>
+        <item>0.1</item>
+        <item>0.0</item>
+        <item>-0.1</item>
+    </string-array>
+
+    <string-array name="array_keywords">
+        <item>Left</item>
+        <item>Right</item>
+        <item>Ear</item>
+        <item>Eye</item>
+        <item>Passed</item>
+        <item>Failed</item>
+        <item>Acute otitis media</item>
+        <item>Otitis media with effusion</item>
+        <item>Chronic suppurative otitis media</item>
+        <item>Wax occlusion</item>
+        <item>Perforation</item>
+        <item>Loss</item>
+    </string-array>
+
+    <!--SUPPORTED LANGUAGE LIST-->
+    <string-array name="language_name_array">
+        <item>Afaan Oromo</item>
+        <item>Afrikaans</item>
+        <item>Af-Somali</item>
+        <item>Ahirani</item>
+        <item>Amharic</item>
+        <item>Arabic</item>
+        <item>Assamese</item>
+        <item>Awadhi</item>
+        <item>Bagheli</item>
+        <item>Bengali</item>
+        <item>Bhili</item>
+        <item>Bundeli</item>
+        <item>Dhundhari</item>
+        <item>Dogri</item>
+        <item>English</item>
+        <item>French</item>
+        <item>Garhwali</item>
+        <item>German</item>
+        <item>Gondi</item>
+        <item>Gujarati</item>
+        <item>Hadiyyisa</item>
+        <item>Harauti</item>
+        <item>Haryanvi</item>
+        <item>Hindi</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Javanese</item>
+        <item>Kannada</item>
+        <item>Kashmiri</item>
+        <item>Khortha</item>
+        <item>Konkani</item>
+        <item>Korean</item>
+        <item>Kumauni</item>
+        <item>Kurukh</item>
+        <item>Lamani</item>
+        <item>Maithili</item>
+        <item>Malayalam</item>
+        <item>Malvi</item>
+        <item>Mandarin</item>
+        <item>Manipuri</item>
+        <item>Marathi</item>
+        <item>Marwari</item>
+        <item>Mewari</item>
+        <item>Nepali</item>
+        <item>Nimadi</item>
+        <item>Oriya</item>
+        <item>Pahari</item>
+        <item>Portuguese</item>
+        <item>Punjabi</item>
+        <item>Russian</item>
+        <item>Santali</item>
+        <item>Sepedi</item>
+        <item>Sidaamu Afoo</item>
+        <item>Sindhi</item>
+        <item>Spanish</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Tigrinya</item>
+        <item>Tsonga</item>
+        <item>Tulu</item>
+        <item>Urdu</item>
+        <item>Venda</item>
+        <item>Vietnamese</item>
+        <item>Wagdi</item>
+        <item>Wolayttatto</item>
+        <item>Zulu</item>
+    </string-array>
+
+    <!--ISO LANGUAGE CODES-->
+    <string-array name="language_code_array">
+        <item>afo</item>
+        <item>afr</item>
+        <item>afs</item>
+        <item>ahr</item>
+        <item>amh</item>
+        <item>ara</item>
+        <item>asm</item>
+        <item>awa</item>
+        <item>bfy</item>
+        <item>ben</item>
+        <item>bhb</item>
+        <item>bns</item>
+        <item>dhn</item>
+        <item>dgr</item>
+        <item>eng</item>
+        <item>fre</item>
+        <item>gbm</item>
+        <item>ger</item>
+        <item>gon</item>
+        <item>guj</item>
+        <item>had</item>
+        <item>hrt</item>
+        <item>bgc</item>
+        <item>hin</item>
+        <item>ita</item>
+        <item>jpn</item>
+        <item>jav</item>
+        <item>kan</item>
+        <item>kas</item>
+        <item>kht</item>
+        <item>kok</item>
+        <item>kor</item>
+        <item>kmn</item>
+        <item>kru</item>
+        <item>lmn</item>
+        <item>mai</item>
+        <item>mal</item>
+        <item>mup</item>
+        <item>chi</item>
+        <item>mni</item>
+        <item>mar</item>
+        <item>mwr</item>
+        <item>mtr</item>
+        <item>nep</item>
+        <item>nmd</item>
+        <item>ori</item>
+        <item>him</item>
+        <item>por</item>
+        <item>pan</item>
+        <item>rus</item>
+        <item>sat</item>
+        <item>sep</item>
+        <item>sid</item>
+        <item>snd</item>
+        <item>spa</item>
+        <item>tam</item>
+        <item>tel</item>
+        <item>tig</item>
+        <item>tso</item>
+        <item>tcy</item>
+        <item>urd</item>
+        <item>ven</item>
+        <item>vie</item>
+        <item>wbr</item>
+        <item>wol</item>
+        <item>zul</item>
+    </string-array>
+</resources>
