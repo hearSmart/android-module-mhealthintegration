@@ -25,9 +25,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     //INTEGRATION LIBRARY
-    //implementation 'com.github.hearSmart:android-module-mhealthintegration:master-SNAPSHOT'
     implementation(name: 'android-module-mhealthintegration-release-v1001-BETA6', ext: 'aar')
-
     //LIBRARIES REQUIRED FOR mhealthintegration lib TO WORK (TEMPORARY SOLUTION)
     //GSON
     implementation 'com.google.code.gson:gson:2.8.2'

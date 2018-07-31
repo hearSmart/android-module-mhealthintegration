@@ -9,7 +9,9 @@ import android.view.View;
 import com.hearxgroup.mhealthintegration.Constants;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
+import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
+import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
 
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-
     @Override
     public void onRetrieveTestHearScreen(HearscreenTest hearscreenTest) {
         Log.d(TAG, "onRetrieveTestHearScreen");
@@ -85,15 +86,15 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     }
 
     @Override
-    public void onRetrieveTestHearTest(HearscreenTest hearscreenTest) {
+    public void onRetrieveTestHearTest(HeartestTest heartestTest) {
         Log.d(TAG, "onRetrieveTestHearTest");
-        Log.d(TAG, "hearscreenTest:"+hearscreenTest.toJson());
+        Log.d(TAG, "heartestTest:"+heartestTest.toJson());
     }
 
     @Override
-    public void onRetrieveTestPeekAcuity(HearscreenTest hearscreenTest) {
+    public void onRetrieveTestPeekAcuity(PeekAcuityTest peekAcuityTest) {
         Log.d(TAG, "onRetrieveTestPeekAcuity");
-        Log.d(TAG, "hearscreenTest:"+hearscreenTest.toJson());
+        Log.d(TAG, "peekAcuityTest:"+peekAcuityTest.toJson());
     }
 
     @Override
