@@ -36,10 +36,8 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1001
-        versionName "1001-BETA7"
-
+        versionName "1001-BETA8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {

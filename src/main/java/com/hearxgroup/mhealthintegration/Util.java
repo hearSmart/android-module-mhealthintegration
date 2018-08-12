@@ -37,8 +37,8 @@ public class Util {
             return "Invalid generatedId parameter";
         else {
             //TESTS PATIENT VALIDATION
-             if(testRequest.getPatientJson()!=null) {
-                 String patientValidation = validatePatient(context, Patient.fromJson(testRequest.getPatientJson()));
+             if(testRequest.getPatient()!=null) {
+                 String patientValidation = testRequest.getPatient().validate(context);
                  if(patientValidation!=null)
                      return patientValidation;
              }
@@ -50,52 +50,6 @@ public class Util {
             return null;
         }
 
-    }
-
-    public static String validatePatient(Context context, Patient patient) {
-        if (patient.getGender() == null || (!patient.getGender().equalsIgnoreCase(TEXT_GENDER_MALE) && !patient.getGender().equalsIgnoreCase(TEXT_GENDER_FEMALE)))
-            return "Invalid gender parameter";
-        else if (patient.getFirstName() == null || patient.getFirstName().length() < 1)
-            return "Invalid first name parameter";
-        else if (patient.getLastName() == null || patient.getLastName().length() < 1)
-            return "Invalid last name parameter";
-        else if (patient.getLanguageCode() == null || patient.getLanguageCode().length() != 3)
-            return "Invalid ISO3 language parameter";
-        else if (patient.getEmail() != null && patient.getEmail().length() > 0 && !isValidEmail(patient.getEmail()))
-            return "Invalid email parameter";
-        else if (patient.getContactNumber() != null && patient.getContactNumber().length() > 0) {
-            PhoneNumberUtil phoneUtil = PhoneNumberUtil.createInstance(context);
-            try {
-                if (!phoneUtil.isValidNumber(phoneUtil.parse(patient.getContactNumber(), "")))
-                    return "Invalid contact no. parameter";
-            } catch (NumberParseException e) {
-                return "Invalid contact no. parameter";
-            }
-        }
-
-        //TEST BIRTHDATE ENTRY
-        try {
-            String birthdate = patient.getBirthDate();
-            int year = Integer.parseInt(birthdate.substring(0, 4));
-            int month = Integer.parseInt(birthdate.substring(5, 7));
-            int day = Integer.parseInt(birthdate.substring(8, 10));
-
-            LocalDate birthdateDate = new LocalDate(year, month, day);
-            LocalDate now = new LocalDate();
-            Years age = Years.yearsBetween(birthdateDate, now);
-            if (age.getYears() < 3)
-                return "Patient too young for test";
-        }
-        catch (Exception e) {
-            return "Invalid birthdate parameter";
-        }
-
-        return null;
-    }
-
-    public static boolean isValidEmail(String email) {
-        Pattern pattern = Patterns.EMAIL_ADDRESS;
-        return pattern.matcher(email).matches();
     }
 
     public static boolean openApp(Context context, Bundle bundle, String actionName) {

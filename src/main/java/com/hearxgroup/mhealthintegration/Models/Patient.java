@@ -10,14 +10,26 @@
 
 package com.hearxgroup.mhealthintegration.Models;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Patterns;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+
+import java.util.regex.Pattern;
+
+import io.michaelrocks.libphonenumber.android.NumberParseException;
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 import lombok.Getter;
 import lombok.Setter;
+
+import static com.hearxgroup.mhealthintegration.Constants.TEXT_GENDER_FEMALE;
+import static com.hearxgroup.mhealthintegration.Constants.TEXT_GENDER_MALE;
 
 @Getter
 @Setter
@@ -71,5 +83,51 @@ public class Patient {
 
     public String toJson() {
         return new Gson().toJson(this);
+    }
+
+    public String validate(Context context) {
+        if (getGender() == null || (!getGender().equalsIgnoreCase(TEXT_GENDER_MALE) && !getGender().equalsIgnoreCase(TEXT_GENDER_FEMALE)))
+            return "Invalid gender parameter";
+        else if (getFirstName() == null || getFirstName().length() < 1)
+            return "Invalid first name parameter";
+        else if (getLastName() == null || getLastName().length() < 1)
+            return "Invalid last name parameter";
+        else if (getLanguageCode() == null || getLanguageCode().length() != 3)
+            return "Invalid ISO3 language parameter";
+        else if (getEmail() != null && getEmail().length() > 0 && !isValidEmail(getEmail()))
+            return "Invalid email parameter";
+        else if (getContactNumber() != null && getContactNumber().length() > 0) {
+            PhoneNumberUtil phoneUtil = PhoneNumberUtil.createInstance(context);
+            try {
+                if (!phoneUtil.isValidNumber(phoneUtil.parse(getContactNumber(), "")))
+                    return "Invalid contact no. parameter";
+            } catch (NumberParseException e) {
+                return "Invalid contact no. parameter";
+            }
+        }
+
+        //TEST BIRTHDATE ENTRY
+        try {
+            String birthdate = getBirthDate();
+            int year = Integer.parseInt(birthdate.substring(0, 4));
+            int month = Integer.parseInt(birthdate.substring(5, 7));
+            int day = Integer.parseInt(birthdate.substring(8, 10));
+
+            LocalDate birthdateDate = new LocalDate(year, month, day);
+            LocalDate now = new LocalDate();
+            Years age = Years.yearsBetween(birthdateDate, now);
+            if (age.getYears() < 3)
+                return "Patient too young for test";
+        }
+        catch (Exception e) {
+            return "Invalid birthdate parameter";
+        }
+
+        return null;
+    }
+
+    private boolean isValidEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 }

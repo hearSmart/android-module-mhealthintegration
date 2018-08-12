@@ -23,7 +23,7 @@ public class MHealthTestRequest {
     @NonNull
     private String generatedId; //24 character length randomly generated string *NB REQUIRED
     @Nullable
-    private String patientJson;
+    private Patient patient;
     @NonNull
     private String returnIntentActionName; //Return intent filter action name
 
@@ -32,11 +32,8 @@ public class MHealthTestRequest {
             @Nullable Patient patient) {
         MHealthTestRequest mHealthTestRequest = new MHealthTestRequest();
         mHealthTestRequest.setGeneratedId(generatedId);
+        mHealthTestRequest.setPatient(patient);
         mHealthTestRequest.setReturnIntentActionName(Constants.MHEALTH_ACTION_NAME);
-
-        if(patient!=null)
-            mHealthTestRequest.setPatientJson(new Gson().toJson(patient));
-
         return mHealthTestRequest;
     }
 
@@ -47,5 +44,7 @@ public class MHealthTestRequest {
     public String toJson() {
         return new Gson().toJson(this);
     }
+
+    //TODO VALIDATION CODE
 
 }
