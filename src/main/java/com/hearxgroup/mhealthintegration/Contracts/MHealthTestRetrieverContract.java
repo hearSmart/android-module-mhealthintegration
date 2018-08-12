@@ -16,6 +16,6 @@ public class MHealthTestRetrieverContract {
         void onRetrieveTestHearScreen(HearscreenTest test);
         void onRetrieveTestHearTest(HeartestTest test);
         void onRetrieveTestPeekAcuity(PeekAcuityTest test);
-        void onRetrieveTestError(String errorMessage);
+        void onRetrieveContentError(String errorMessage);
     }
 }

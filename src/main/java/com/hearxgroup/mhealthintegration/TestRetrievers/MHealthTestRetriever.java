@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
-import com.hearxgroup.mhealthintegration.Constants;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
@@ -27,11 +26,9 @@ import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 
-public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
+import static com.hearxgroup.hearx.Constants.*;
 
-    private final String HEARSCREEN_TEST_ID_PROVIDER_NAME = "com.hearxgroup.mhealthstudio.TestProvider/hearscreen.test/";
-    private final String HEARTEST_TEST_ID_PROVIDER_NAME = "com.hearxgroup.mhealthstudio.TestProvider/heartest.test/";
-    private final String PEEKACUITY_TEST_ID_PROVIDER_NAME = "com.hearxgroup.mhealthstudio.TestProvider/peekacuity.test/";
+public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = 1;
 
@@ -39,7 +36,7 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
     private LoaderManager loaderManager;
     private Context context;
     private MHealthTestRetrieverContract.TestRetrieverInterface listener;
-    private int testType;
+    private int providerCode;
 
     public MHealthTestRetriever(Context context, LoaderManager loaderManager, MHealthTestRetrieverContract.TestRetrieverInterface listener) {
         this.context = context;
@@ -47,14 +44,13 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
         this.listener = listener;
     }
 
-    public void startPoll(int testType, String generatedTestId) {
-        this.testType = testType;
-
-        String provider = getProvider(testType);
+    public void startPoll(int providerCode, String generatedId) {
+        this.providerCode = providerCode;
+        String provider = getProvider(providerCode);
         if(provider==null)
-            listener.onRetrieveTestError("Invalid test type");
+            listener.onRetrieveContentError("Invalid providerCode");
         else {
-            contentUri = Uri.parse("content://" + provider + generatedTestId);
+            contentUri = Uri.parse("content://" + provider + generatedId);
             loaderManager.initLoader(LOADER_ID, null, MHealthTestRetriever.this);
         }
     }
@@ -70,28 +66,30 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
         data = context.getContentResolver().query(contentUri, null, null, null, null);
         if (data != null && data.getCount() > 0) {
             data.moveToFirst();
-            returnTest(testType, data.getString(1));
+            returnContent(providerCode, data.getString(1));
         }
         else
-            listener.onRetrieveTestError("Test not found with provided testType/testId combination");
+            listener.onRetrieveContentError("Test not found with provided testType/testId combination");
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
 
-    private String getProvider(int testType) {
-        switch(testType) {
-            case Constants.INDEX_HEARSCREEN: return HEARSCREEN_TEST_ID_PROVIDER_NAME;
-            case Constants.INDEX_HEARTEST: return HEARTEST_TEST_ID_PROVIDER_NAME;
-            case Constants.INDEX_PEEK: return PEEKACUITY_TEST_ID_PROVIDER_NAME;
+    private String getProvider(int providerCode) {
+        switch(providerCode) {
+            case PROVIDER_CODE_TEST_HEARSCREEN: return PROVIDER_NAME_HEARSCREEN_TEST;
+            case PROVIDER_CODE_TEST_HEARTEST: return PROVIDER_NAME_HEARTEST_TEST;
+            case PROVIDER_CODE_TEST_PEEK: return PROVIDER_NAME_PEEKACUITY_TEST;
+            case PROVIDER_CODE_PATIENT: return PROVIDER_NAME_PATIENT;
+            case PROVIDER_CODE_FACILITY: return PROVIDER_NAME_FACILITY;
             default : return null;
         }
     }
 
-    private void returnTest(int testType, String testJson) {
+    private void returnContent(int testType, String testJson) {
         switch(testType) {
-            case Constants.INDEX_HEARSCREEN:
+            case PROVIDER_CODE_TEST_HEARSCREEN:
                 if(testJson!=null && testJson.length()>0) {
                     HearscreenTest test = HearscreenTest.fromJson(testJson);
                     test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
@@ -99,7 +97,7 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
                     listener.onRetrieveTestHearScreen(test);
                 }
                 break;
-            case Constants.INDEX_HEARTEST:
+            case PROVIDER_CODE_TEST_HEARTEST:
                 if(testJson!=null && testJson.length()>0) {
                     HeartestTest test = HeartestTest.fromJson(testJson);
                     test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
@@ -107,7 +105,7 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
                     listener.onRetrieveTestHearTest(test);
                 }
                 break;
-            case Constants.INDEX_PEEK:
+            case PROVIDER_CODE_TEST_PEEK:
                 if(testJson!=null && testJson.length()>0) {
                     PeekAcuityTest test = PeekAcuityTest.fromJson(testJson);
                     listener.onRetrieveTestPeekAcuity(test);

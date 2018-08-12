@@ -28,8 +28,8 @@ import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.hearxgroup.mhealthintegration.Constants.TEXT_GENDER_FEMALE;
-import static com.hearxgroup.mhealthintegration.Constants.TEXT_GENDER_MALE;
+import static com.hearxgroup.hearx.Constants.TEXT_GENDER_FEMALE;
+import static com.hearxgroup.hearx.Constants.TEXT_GENDER_MALE;
 
 @Getter
 @Setter

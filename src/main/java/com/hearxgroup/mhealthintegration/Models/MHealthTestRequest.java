@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
-import com.hearxgroup.mhealthintegration.Constants;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -29,11 +28,12 @@ public class MHealthTestRequest {
 
     public static MHealthTestRequest build(
             @NonNull String generatedId,
+            @NonNull String returnIntentActionName,
             @Nullable Patient patient) {
         MHealthTestRequest mHealthTestRequest = new MHealthTestRequest();
         mHealthTestRequest.setGeneratedId(generatedId);
+        mHealthTestRequest.setReturnIntentActionName(returnIntentActionName);
         mHealthTestRequest.setPatient(patient);
-        mHealthTestRequest.setReturnIntentActionName(Constants.MHEALTH_ACTION_NAME);
         return mHealthTestRequest;
     }
 

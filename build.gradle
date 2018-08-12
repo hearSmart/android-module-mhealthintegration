@@ -30,13 +30,17 @@ allprojects {
 }
 
 android {
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
     compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1001
-        versionName "1001-BETA8"
+        versionName "1001-BETA14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -56,7 +60,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    //INTERNAL LIBRARIES
+    implementation(name: 'android-module-hearx-release-v1001-BETA19', ext: 'aar')
     //LOMBOK
     implementation 'org.projectlombok:lombok:1.16.18'
     annotationProcessor "org.projectlombok:lombok:1.16.18"

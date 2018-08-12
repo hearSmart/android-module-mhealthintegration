@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.hearxgroup.mhealthintegration.Constants;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
@@ -31,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
             public void onClick(View v) {
                 String testId = getRandomSequence();
                 Patient demoPatient = Patient.build(
-                        "John",//firstName
-                        "Smith",//lastName
-                        "1992-02-21",//YYYY-MM-dd
+                        "James",//firstName
+                        "Langley",//lastName
+                        "1993-02-21",//YYYY-MM-dd
                         "male", //male/female
                         "eng",//iso3 languageCode
                         null,//email
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
                 MHealthTestRequest testRequest =
                         MHealthTestRequest.build(
                                 testId,
+                                "com.hearxgroup.mhealthintegrationdemo.mhealthtest",
                                 demoPatient);
 
                 String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
@@ -68,11 +68,13 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         if(mHealthTestId!=null) {
             //RETURN FROM A TEST REQUEST OCCURRED
             Log.d(TAG, "RETURN FROM AN MHEALTH TEST REQUEST OCCURRED");
+            Log.d(TAG, "mHealthTestId: "+mHealthTestId);
+            Log.d(TAG, "testType: "+TestRequestHelper.getTestTypeFromIntent(intent));
             TestRequestHelper.retrieveTestResult(
                     MainActivity.this,
                     getLoaderManager(),
                     MainActivity.this,
-                    Constants.INDEX_HEARSCREEN,
+                    TestRequestHelper.getTestTypeFromIntent(intent),
                     mHealthTestId);
         }
     }
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     }
 
     @Override
-    public void onRetrieveTestError(String errorMessage) {
-        Log.e(TAG, "onRetrieveTestError: "+errorMessage);
+    public void onRetrieveContentError(String errorMessage) {
+        Log.e(TAG, "onRetrieveContentError: "+errorMessage);
     }
 }
