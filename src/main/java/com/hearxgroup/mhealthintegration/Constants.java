@@ -29,4 +29,6 @@ public class Constants {
 
     public static final int EAR_LEFT = 1;
     public static final int EAR_RIGHT = 2;
+
+    public static String MHEALTH_ACTION_NAME = "com.hearxgroup.mhealthintegrationdemo.mhealthtest";
 }

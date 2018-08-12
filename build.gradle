@@ -10,7 +10,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
@@ -36,7 +36,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1001
-        versionName "1001-BETA6"
+        versionName "1001-BETA7"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -59,6 +59,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //LOMBOK
+    implementation 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //GSON
     implementation 'com.google.code.gson:gson:2.8.2'

@@ -11,6 +11,7 @@ import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
+import com.hearxgroup.mhealthintegration.Models.Patient;
 import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
@@ -29,19 +30,20 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
             @Override
             public void onClick(View v) {
                 String testId = getRandomSequence();
+                Patient demoPatient = Patient.build(
+                        "John",//firstName
+                        "Smith",//lastName
+                        "1992-02-21",//YYYY-MM-dd
+                        "male", //male/female
+                        "eng",//iso3 languageCode
+                        null,//email
+                        null,//contactnumber
+                        null,//identificationNumber (Users national identification number)
+                        null);//referenceNumber (Any reference string you have to connect with your system)
                 MHealthTestRequest testRequest =
                         MHealthTestRequest.build(
                                 testId,
-                                "male",
-                                "1992-02-21",
-                                "John",
-                                "Smith",
-                                "eng",
-                                null,
-                                null,
-                                null,
-                                null,
-                                "com.hearxgroup.mhealthintegrationdemo.mhealthtest");
+                                demoPatient);
 
                 String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
                 if(requestValidationResponse==null)
