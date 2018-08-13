@@ -7,12 +7,21 @@ import android.os.Bundle;
 
 import com.hearxgroup.hearx.MiscUtils;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
-import com.hearxgroup.mhealthintegration.TestRetrievers.MHealthTestRetriever;
+import com.hearxgroup.mhealthintegration.TestRetrievers.MHealthContentRetriever;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 
 import static com.hearxgroup.hearx.Constants.BUNDLE_EXTRA_MHTEST_GN_ID;
 import static com.hearxgroup.hearx.Constants.BUNDLE_EXTRA_MHTEST_REQUEST_JSON;
 import static com.hearxgroup.hearx.Constants.BUNDLE_EXTRA_TEST_TYPE;
+import static com.hearxgroup.hearx.Constants.CODE_UNSET;
+import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
+import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
+import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
+import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_FACILITY;
+import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_PATIENT;
+import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_TEST_HEARSCREEN;
+import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_TEST_HEARTEST;
+import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_TEST_PEEK;
 
 /**
  * Copyright (c) 2017 hearX Group (Pty) Ltd. All rights reserved
@@ -35,13 +44,35 @@ public class TestRequestHelper {
     public static void retrieveTestResult(
             Context context,
             LoaderManager loaderManager,
-            MHealthTestRetrieverContract.TestRetrieverInterface callback,
-            int testType,
-            String testId) {
-        new MHealthTestRetriever(context, loaderManager, callback).startPoll(testType, testId);
+            MHealthTestRetrieverContract.ContentRetrieverInterface callback,
+            int testIndex,
+            String generatedId) {
+        int providerCode = CODE_UNSET;
+        switch(testIndex) {
+            case INDEX_HEARSCREEN: providerCode = PROVIDER_CODE_TEST_HEARSCREEN; break;
+            case INDEX_HEARTEST: providerCode = PROVIDER_CODE_TEST_HEARTEST; break;
+            case INDEX_PEEK: providerCode = PROVIDER_CODE_TEST_PEEK; break;
+        }
+        new MHealthContentRetriever(context, loaderManager, callback).startPoll(providerCode, generatedId);
     }
 
-    public static String getTestIdFromIntent(Intent intent) {
+    public static void retrievePatient(
+            Context context,
+            LoaderManager loaderManager,
+            MHealthTestRetrieverContract.ContentRetrieverInterface callback,
+            String generatedId) {
+        new MHealthContentRetriever(context, loaderManager, callback).startPoll(PROVIDER_CODE_PATIENT, generatedId);
+    }
+
+    public static void retrieveFacility(
+            Context context,
+            LoaderManager loaderManager,
+            MHealthTestRetrieverContract.ContentRetrieverInterface callback,
+            String generatedId) {
+        new MHealthContentRetriever(context, loaderManager, callback).startPoll(PROVIDER_CODE_FACILITY, generatedId);
+    }
+
+    public static String getGeneratedTestIdFromIntent(Intent intent) {
         Bundle bundle = intent.getExtras();
         if(bundle!=null && bundle.getString(BUNDLE_EXTRA_MHTEST_GN_ID)!=null) {
             return bundle.getString(BUNDLE_EXTRA_MHTEST_GN_ID);

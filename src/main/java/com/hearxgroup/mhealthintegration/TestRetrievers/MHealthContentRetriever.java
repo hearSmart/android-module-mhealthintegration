@@ -20,25 +20,27 @@ import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
+import com.hearxgroup.mhealthintegration.Models.Facility;
 import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
+import com.hearxgroup.mhealthintegration.Models.Patient;
 import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 
 import static com.hearxgroup.hearx.Constants.*;
 
-public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = 1;
 
     private Uri contentUri;
     private LoaderManager loaderManager;
     private Context context;
-    private MHealthTestRetrieverContract.TestRetrieverInterface listener;
+    private MHealthTestRetrieverContract.ContentRetrieverInterface listener;
     private int providerCode;
 
-    public MHealthTestRetriever(Context context, LoaderManager loaderManager, MHealthTestRetrieverContract.TestRetrieverInterface listener) {
+    public MHealthContentRetriever(Context context, LoaderManager loaderManager, MHealthTestRetrieverContract.ContentRetrieverInterface listener) {
         this.context = context;
         this.loaderManager = loaderManager;
         this.listener = listener;
@@ -51,7 +53,7 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
             listener.onRetrieveContentError("Invalid providerCode");
         else {
             contentUri = Uri.parse("content://" + provider + generatedId);
-            loaderManager.initLoader(LOADER_ID, null, MHealthTestRetriever.this);
+            loaderManager.initLoader(LOADER_ID, null, MHealthContentRetriever.this);
         }
     }
 
@@ -87,28 +89,40 @@ public class MHealthTestRetriever implements LoaderManager.LoaderCallbacks<Curso
         }
     }
 
-    private void returnContent(int testType, String testJson) {
+    private void returnContent(int testType, String dataJson) {
         switch(testType) {
             case PROVIDER_CODE_TEST_HEARSCREEN:
-                if(testJson!=null && testJson.length()>0) {
-                    HearscreenTest test = HearscreenTest.fromJson(testJson);
+                if(dataJson!=null && dataJson.length()>0) {
+                    HearscreenTest test = HearscreenTest.fromJson(dataJson);
                     test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
                     test.setFrequencyResultsJson(null);
                     listener.onRetrieveTestHearScreen(test);
                 }
                 break;
             case PROVIDER_CODE_TEST_HEARTEST:
-                if(testJson!=null && testJson.length()>0) {
-                    HeartestTest test = HeartestTest.fromJson(testJson);
+                if(dataJson!=null && dataJson.length()>0) {
+                    HeartestTest test = HeartestTest.fromJson(dataJson);
                     test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
                     test.setFrequencyResultsJson(null);
                     listener.onRetrieveTestHearTest(test);
                 }
                 break;
             case PROVIDER_CODE_TEST_PEEK:
-                if(testJson!=null && testJson.length()>0) {
-                    PeekAcuityTest test = PeekAcuityTest.fromJson(testJson);
+                if(dataJson!=null && dataJson.length()>0) {
+                    PeekAcuityTest test = PeekAcuityTest.fromJson(dataJson);
                     listener.onRetrieveTestPeekAcuity(test);
+                }
+                break;
+            case PROVIDER_CODE_PATIENT:
+                if(dataJson!=null && dataJson.length()>0) {
+                    Patient patient = Patient.fromJson(dataJson);
+                    listener.onRetrievePatient(patient);
+                }
+                break;
+            case PROVIDER_CODE_FACILITY:
+                if(dataJson!=null && dataJson.length()>0) {
+                    Facility facility = Facility.fromJson(dataJson);
+                    listener.onRetrieveFacility(facility);
                 }
                 break;
         }

@@ -17,8 +17,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MHealthTestRequest {
-    //TODO testType
-    /*private int testType; //hearScreen/hearTest/hearDin/hearScope/Peek Acuity.*/
     @NonNull
     private String generatedId; //24 character length randomly generated string *NB REQUIRED
     @Nullable
@@ -44,7 +42,4 @@ public class MHealthTestRequest {
     public String toJson() {
         return new Gson().toJson(this);
     }
-
-    //TODO VALIDATION CODE
-
 }

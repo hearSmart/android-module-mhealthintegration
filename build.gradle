@@ -40,7 +40,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1001
-        versionName "1001-BETA14"
+        versionName "1001-BETA16"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -60,16 +60,17 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    //INTERNAL LIBRARIES
-    implementation(name: 'android-module-hearx-release-v1001-BETA19', ext: 'aar')
-    //LOMBOK
-    implementation 'org.projectlombok:lombok:1.16.18'
-    annotationProcessor "org.projectlombok:lombok:1.16.18"
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    //INTERNAL LIBRARIES
+    api(name: 'android-module-hearx-release-v1001-BETA20', ext: 'aar')
+    //LOMBOK
+    api 'org.projectlombok:lombok:1.16.18'
     //GSON
-    implementation 'com.google.code.gson:gson:2.8.2'
+    api 'com.google.code.gson:gson:2.8.2'
     //PHONENUMBER
-    implementation 'io.michaelrocks:libphonenumber-android:8.9.9'
+    api 'io.michaelrocks:libphonenumber-android:8.9.9'
     //JODA TIME
-    implementation 'joda-time:joda-time:2.9.9'
+    api 'joda-time:joda-time:2.9.9'
+
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
 }
