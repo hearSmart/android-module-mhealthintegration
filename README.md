@@ -4,10 +4,7 @@ This library provides integration into the mHealthStudio application developed b
 The library provides mechanisms to both request tests and retrieve test, patient and facility information from mHealthStudio.
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-A sample application using this library is provided in the 'sample' directory
+Note. A sample application using this library is provided in the 'sample' directory
 
 ### Prerequisites
 1. Include the following in your app build.gradle file
@@ -41,12 +38,11 @@ Note. The above dependencies are only a temporary solution. Once this library is
  </intent-filter>
 ```
 4. Request a test by building a patient object (Optional) and using the MHealthTestRequest.build function
-Eg.
 ```
 //GENERATE UNIQUE 24 CHAR TEST ID
- String testId = RANDOM_24CHAR_SEQUENCE;
- //GENERATE PATIENT (NOT REQUIRED)
- Patient demoPatient = Patient.build(
+String testId = UUID.randomUUID().toString().replaceAll("-", "");
+//BUILD PATIENT (NOT REQUIRED)
+Patient demoPatient = Patient.build(
          "Will",//firstName (Mandatory)
          "Turner",//lastName (Mandatory)
          "1987-05-07",//YYYY-MM-dd (Mandatory)
@@ -56,20 +52,20 @@ Eg.
          null,//contactnumber (Not Mandatory)
          null,//identificationNumber (Users national identification number) (Not Mandatory)
          null);//referenceNumber (Any reference string you have to connect with your system) (Not Mandatory)
- //BUILD TEST REQUEST
- MHealthTestRequest testRequest =
+//BUILD TEST REQUEST
+MHealthTestRequest testRequest =
          MHealthTestRequest.build(
                  testId, //UNIQUE TEST ID
-                 "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //ACTION NAME AS DEFINED IN YOUR MANIFEST
+                 YOUR_RETURN_INTENT_ACTION_NAME, //ACTION NAME AS DEFINED IN YOUR MANIFEST
                  demoPatient); //PATIENT OBJECT OR NULL
- //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
- String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
- if(requestValidationResponse==null)
-     //VALIDATION WAS PASSED, INITIATE TEST REQUEST
-     TestRequestHelper.startTest(MainActivity.this, testRequest);
- else
-     //VALIDATION ERROR OCCURRED
-     Log.e("MainActivity", "Validation error:"+requestValidationResponse);
+//UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
+String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
+if(requestValidationResponse==null)
+    //VALIDATION WAS PASSED, INITIATE TEST REQUEST
+    TestRequestHelper.startTest(MainActivity.this, testRequest);
+else
+    //VALIDATION ERROR OCCURRED
+    Log.e("MainActivity", "Validation error:"+requestValidationResponse);
 ```
 
 5. Ensure your activity implements MHealthTestRetrieverContract.ContentRetrieverInterface
@@ -110,13 +106,13 @@ TestRequestHelper.retrieveTestResult(
         getLoaderManager(),
         MainActivity.this,
         TestRequestHelper.getTestTypeFromIntent(intent),
-        mHealthGeneratedTestId);
+        testId); //OBTAIN FROM RETURN INTENT
 
-  TestRequestHelper.retrievePatient(
+TestRequestHelper.retrievePatient(
                   MainActivity.this,
                   getLoaderManager(),
                   MainActivity.this,
-                  patientGeneratedId);
+                  patientId); //OBTAIN FROM TEST ENTRY
 ```
 ## License
 
