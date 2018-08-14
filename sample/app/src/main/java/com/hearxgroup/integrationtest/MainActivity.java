@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
                 //BUILD TEST REQUEST
                 MHealthTestRequest testRequest =
                         MHealthTestRequest.build(
-                                testId,
-                                "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //The action name defined in your manifest
-                                demoPatient);
-                //VALIDATE TEST REQUEST
+                                testId, //UNIQUE TEST ID
+                                "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //ACTION NAME AS DEFINED IN YOUR MANIFEST
+                                demoPatient); //PATIENT OBJECT OR NULL
+                //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
                 String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
                 if(requestValidationResponse==null)
-                    //VALIDATION WAS PASSED, INITIATE MHEALTH
+                    //VALIDATION WAS PASSED, INITIATE TEST REQUEST
                     TestRequestHelper.startTest(MainActivity.this, testRequest);
                 else
                     //VALIDATION ERROR OCCURRED
