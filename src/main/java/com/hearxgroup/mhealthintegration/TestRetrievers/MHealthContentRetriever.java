@@ -17,6 +17,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
@@ -27,10 +28,12 @@ import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
 import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
+import com.hearxgroup.mhealthintegration.TestRequestHelper;
 
 import static com.hearxgroup.hearx.Constants.*;
 
 public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String TAG = MHealthContentRetriever.class.getSimpleName();
 
     private static final int LOADER_ID = 1;
 
@@ -47,24 +50,31 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
     }
 
     public void startPoll(int providerCode, String generatedId) {
+        Log.d(TAG, "startPoll");
+        Log.d(TAG, "providerCode:"+providerCode);
+        Log.d(TAG, "generatedId:"+generatedId);
         this.providerCode = providerCode;
         String provider = getProvider(providerCode);
         if(provider==null)
             listener.onRetrieveContentError("Invalid providerCode");
         else {
-            contentUri = Uri.parse("content://" + provider + generatedId);
+            String uriString = "content://" + provider + generatedId;
+            Log.d(TAG, "uriString:"+uriString);
+            contentUri = Uri.parse(uriString);
             loaderManager.initLoader(LOADER_ID, null, MHealthContentRetriever.this);
         }
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        Log.d(TAG, "onCreateLoader");
         return new CursorLoader(context, contentUri,
                 null, null, null, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Log.d(TAG, "onLoadFinished");
         data = context.getContentResolver().query(contentUri, null, null, null, null);
         if (data != null && data.getCount() > 0) {
             data.moveToFirst();
@@ -76,9 +86,12 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        Log.d(TAG, "onLoaderReset");
     }
 
     private String getProvider(int providerCode) {
+        Log.d(TAG, "getProvider");
+        Log.d(TAG, "providerCode:"+providerCode);
         switch(providerCode) {
             case PROVIDER_CODE_TEST_HEARSCREEN: return PROVIDER_NAME_HEARSCREEN_TEST;
             case PROVIDER_CODE_TEST_HEARTEST: return PROVIDER_NAME_HEARTEST_TEST;

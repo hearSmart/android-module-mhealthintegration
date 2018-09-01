@@ -39,8 +39,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1002
-        versionName "1002"
+        versionCode 1003
+        versionName "1003"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,7 +62,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    api(name: 'android-module-hearx-release-v1002', ext: 'aar')
+    api(name: 'android-module-hearx-release-v1004', ext: 'aar')
     //LOMBOK
     api 'org.projectlombok:lombok:1.16.18'
     //GSON

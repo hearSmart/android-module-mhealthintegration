@@ -4,6 +4,7 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.hearxgroup.hearx.MiscUtils;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
@@ -30,6 +31,8 @@ import static com.hearxgroup.hearx.Constants.PROVIDER_CODE_TEST_PEEK;
  * info@hearxgroup.com
  */
 public class TestRequestHelper {
+
+    private static final String TAG = TestRequestHelper.class.getSimpleName();
 
     public static String startTest(Context context, MHealthTestRequest testRequest) {
         String validationResponse = Util.validateTestRequest(context, testRequest);
@@ -82,6 +85,7 @@ public class TestRequestHelper {
     }
 
     public static int getTestTypeFromIntent(Intent intent) {
+        Log.d(TAG, "getTestTypeFromIntent");
         Bundle bundle = intent.getExtras();
         if(bundle!=null && bundle.getString(BUNDLE_EXTRA_MHTEST_GN_ID)!=null) {
             return bundle.getInt(BUNDLE_EXTRA_TEST_TYPE);

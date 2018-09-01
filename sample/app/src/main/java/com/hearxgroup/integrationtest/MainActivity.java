@@ -2,10 +2,13 @@ package com.hearxgroup.integrationtest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.hearxgroup.hearx.MiscUtils;
+import com.hearxgroup.integrationtest.ODK.ODKHelper;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.Facility;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
@@ -22,43 +25,16 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
 
     private final String TAG = getClass().getSimpleName();
 
+    private boolean odkRequest = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //GENERATE UNIQUE 24 CHAR TEST ID
-                String testId = getRandomSequence();
-                //GENERATE PATIENT (NOT REQUIRED)
-                Patient demoPatient = Patient.build(
-                        "Will",//firstName
-                        "Turner",//lastName
-                        "1987-05-07",//YYYY-MM-dd
-                        "male", //male/female
-                        "eng",//iso3 languageCode
-                        null,//email
-                        null,//contactnumber
-                        null,//identificationNumber (Users national identification number)
-                        null);//referenceNumber (Any reference string you have to connect with your system)
-                //BUILD TEST REQUEST
-                MHealthTestRequest testRequest =
-                        MHealthTestRequest.build(
-                                testId, //UNIQUE TEST ID
-                                "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //ACTION NAME AS DEFINED IN YOUR MANIFEST
-                                demoPatient); //PATIENT OBJECT OR NULL
-                //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
-                String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
-                if(requestValidationResponse==null)
-                    //VALIDATION WAS PASSED, INITIATE TEST REQUEST
-                    TestRequestHelper.startTest(MainActivity.this, testRequest);
-                else
-                    //VALIDATION ERROR OCCURRED
-                    Log.e("MainActivity", "Validation error:"+requestValidationResponse);
-            }
+        findViewById(R.id.btn_test).setOnClickListener(v -> {
+            requestMHTest(buildTestPatient(), false); //REQUEST TEST WITH PATIENT
+            //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
-
         onNewIntent(getIntent());
     }
 
@@ -74,12 +50,18 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
      * @param intent
      */
     private void handleLaunchIntent(Intent intent) {
-        String mHealthGeneratedTestId = TestRequestHelper.getGeneratedTestIdFromIntent(intent);
-        if(mHealthGeneratedTestId!=null) {
-            //RETURN FROM A TEST REQUEST OCCURRED
+        Log.d(TAG, "handleLaunchIntent");
+        Log.d(TAG, "intent.toUri: "+intent.toUri(0));
+        if(intent.getDoubleExtra(Constants.REQUEST_KEY_ODK, 0)>0) { //WE HAVE AN ODK REQUEST
+            Log.d(TAG, "ODK REQUEST OCCURRED");
+            requestMHTest(ODKHelper.getPatientFromODKRequest(intent), true);
+        }
+        else if(TestRequestHelper.getGeneratedTestIdFromIntent(intent)!=null) { //RETURN FROM A TEST REQUEST OCCURRED
+            String mHealthGeneratedTestId = TestRequestHelper.getGeneratedTestIdFromIntent(intent);
             Log.d(TAG, "RETURN FROM AN MHEALTH TEST REQUEST OCCURRED");
             Log.d(TAG, "mHealthGeneratedTestId: "+mHealthGeneratedTestId);
             Log.d(TAG, "testType: "+TestRequestHelper.getTestTypeFromIntent(intent));
+            Log.d(TAG, "odkRequest: "+odkRequest);
             TestRequestHelper.retrieveTestResult(
                     MainActivity.this,
                     getLoaderManager(),
@@ -91,6 +73,39 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
 
     public static String getRandomSequence() {
         return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    private Patient buildTestPatient() {
+        return Patient.build(
+                "Will",//firstName
+                "Turner",//lastName
+                "1987-05-07",//YYYY-MM-dd
+                "male", //male/female
+                "eng",//iso3 languageCode
+                null,//email
+                null,//contactnumber
+                null,//identificationNumber (Users national identification number)
+                null);//referenceNumber (Any reference string you have to connect with your system)
+    }
+
+    private void requestMHTest(@Nullable Patient patient, boolean odkRequest) {
+        this.odkRequest = odkRequest;
+        //GENERATE UNIQUE 24 CHAR TEST ID
+        String testId = getRandomSequence();
+        //BUILD TEST REQUEST
+        MHealthTestRequest testRequest =
+                MHealthTestRequest.build(
+                        testId, //UNIQUE TEST ID
+                        "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //ACTION NAME AS DEFINED IN YOUR MANIFEST
+                        patient); //PATIENT OBJECT OR NULL
+        //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
+        String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
+        if(requestValidationResponse==null)
+            //VALIDATION WAS PASSED, INITIATE TEST REQUEST
+            TestRequestHelper.startTest(MainActivity.this, testRequest);
+        else
+            //VALIDATION ERROR OCCURRED
+            Log.e("MainActivity", "Validation error:"+requestValidationResponse);
     }
 
     @Override
@@ -111,12 +126,22 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         Log.d(TAG, "onRetrieveTestHearTest");
         Log.d(TAG, "heartestTest:"+heartestTest.toJson());
         Log.d(TAG, "generatedPatientId: "+heartestTest.getGeneratedPatientId());
-        if(heartestTest.getGeneratedPatientId()!=null)
+        if(heartestTest.getGeneratedPatientId()!=null) {
             TestRequestHelper.retrievePatient(
                     MainActivity.this,
                     getLoaderManager(),
                     MainActivity.this,
                     heartestTest.getGeneratedPatientId());
+
+            odkRequest = true;
+            if(odkRequest) {
+                Log.d(TAG, "ODK REQUEST RETURN");
+                Intent intent = new Intent();
+                intent.putExtras(ODKHelper.getODKReturnBundle(heartestTest));
+                startActivity(MiscUtils.getLaunchAppIntent(getPackageManager(), ODKHelper.getODKReturnBundle(heartestTest), "org.odk.collect.mhealthtest"));
+                finish();
+            }
+        }
     }
 
     @Override
@@ -147,5 +172,14 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     @Override
     public void onRetrieveContentError(String errorMessage) {
         Log.e(TAG, "onRetrieveContentError: "+errorMessage);
+    }
+
+    @Nullable
+    @Override
+    public Intent getParentActivityIntent() {
+        Log.d(TAG, "getParentActivityIntent()");
+        Intent parentIntent = super.getParentActivityIntent();
+        Log.d(TAG, "intent parent: "+parentIntent.getComponent().getClassName());
+        return parentIntent;
     }
 }
