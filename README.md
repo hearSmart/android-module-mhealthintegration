@@ -9,25 +9,9 @@ Note. A sample application using this library is provided in the 'sample' direct
 ### Prerequisites
 1. Include the following in your app build.gradle file
 ```
-//LIBRARIES REQUIRED FOR mhealthintegration lib TO WORK (TEMPORARY SOLUTION. WILL SOON PUBLISH TO MAVEN AND ONLY android-module-mhealthintegration-release will be required)
-//INTERNAL AAR LIBRARIES
-implementation(name: 'android-module-mhealthintegration-release-v1002', ext: 'aar')
-implementation(name: 'android-module-hearx-release-v1002', ext: 'aar')
-//RX JAVA
-implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
-//GUAVA
-implementation 'com.google.guava:guava:23.6-android'
-//GSON
-implementation 'com.google.code.gson:gson:2.8.2'
-//PHONENUMBER
-implementation 'io.michaelrocks:libphonenumber-android:8.9.9'
-//JODA TIME
-implementation 'joda-time:joda-time:2.9.9'
+implementation 'com.github.hearSmart:android-module-mhealthintegration:v1005'
+annotationProcessor "org.projectlombok:lombok:1.16.18"
 ```
-2. Retrieve the android-module-mhealthintegration-release-v1002.aar and android-module-hearx-release-v1002.aar files from the sample projects app/libs folder and copy to your projects app/libs folder
-
-Note. The above dependencies are only a temporary solution. Once this library is hosted on maven the above dependencies will not be required.
 
 3. Ensure your manifest contains an intent filter as below inside an activity tag to allow mHealth to return to your application after testing.
 ```
