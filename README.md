@@ -13,6 +13,15 @@ implementation 'com.github.hearSmart:android-module-mhealthintegration:v1005'
 annotationProcessor "org.projectlombok:lombok:1.16.18"
 ```
 
+2. Ensure you have jitpack maven repo defined in your top level build.gradle repositories list
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 3. Ensure your manifest contains an intent filter as below inside an activity tag to allow mHealth to return to your application after testing.
 ```
 <intent-filter>
