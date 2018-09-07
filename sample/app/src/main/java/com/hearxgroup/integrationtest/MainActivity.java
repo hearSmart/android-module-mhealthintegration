@@ -52,11 +52,7 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     private void handleLaunchIntent(Intent intent) {
         Log.d(TAG, "handleLaunchIntent");
         Log.d(TAG, "intent.toUri: "+intent.toUri(0));
-        if(intent.getDoubleExtra(Constants.REQUEST_KEY_ODK, 0)>0) { //WE HAVE AN ODK REQUEST
-            Log.d(TAG, "ODK REQUEST OCCURRED");
-            requestMHTest(ODKHelper.getPatientFromODKRequest(intent), true);
-        }
-        else if(TestRequestHelper.getGeneratedTestIdFromIntent(intent)!=null) { //RETURN FROM A TEST REQUEST OCCURRED
+        if(TestRequestHelper.getGeneratedTestIdFromIntent(intent)!=null) { //RETURN FROM A TEST REQUEST OCCURRED
             String mHealthGeneratedTestId = TestRequestHelper.getGeneratedTestIdFromIntent(intent);
             Log.d(TAG, "RETURN FROM AN MHEALTH TEST REQUEST OCCURRED");
             Log.d(TAG, "mHealthGeneratedTestId: "+mHealthGeneratedTestId);
