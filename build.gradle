@@ -39,8 +39,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1003
-        versionName "1003"
+        versionCode 1004
+        versionName "1004"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,15 +62,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    api(name: 'android-module-hearx-release-v1004', ext: 'aar')
+    implementation 'com.github.hearSmart:android-module-hearx:v1004'
     //LOMBOK
-    api 'org.projectlombok:lombok:1.16.18'
+    implementation 'org.projectlombok:lombok:1.16.18'
     //GSON
-    api 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
     //PHONENUMBER
-    api 'io.michaelrocks:libphonenumber-android:8.9.9'
+    implementation 'io.michaelrocks:libphonenumber-android:8.9.9'
     //JODA TIME
-    api 'joda-time:joda-time:2.9.9'
+    implementation 'joda-time:joda-time:2.9.9'
 
     annotationProcessor "org.projectlombok:lombok:1.16.18"
 }
