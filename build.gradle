@@ -62,7 +62,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    implementation 'com.github.hearSmart:android-module-hearx:v1005'
+    api 'com.github.hearSmart:android-module-hearx:v1005'
     //LOMBOK
     implementation 'org.projectlombok:lombok:1.16.18'
     //GSON
