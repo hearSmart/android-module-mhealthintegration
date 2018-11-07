@@ -23,15 +23,19 @@ public class MHealthTestRequest {
     private Patient patient;
     @NonNull
     private String returnIntentActionName; //Return intent filter action name
+    @NonNull
+    private int testIndex; //use CODE_UNSET if no specific test required
 
     public static MHealthTestRequest build(
             @NonNull String generatedId,
             @NonNull String returnIntentActionName,
-            @Nullable Patient patient) {
+            @Nullable Patient patient,
+            @NonNull int testIndex) {
         MHealthTestRequest mHealthTestRequest = new MHealthTestRequest();
         mHealthTestRequest.setGeneratedId(generatedId);
         mHealthTestRequest.setReturnIntentActionName(returnIntentActionName);
         mHealthTestRequest.setPatient(patient);
+        mHealthTestRequest.setTestIndex(testIndex);
         return mHealthTestRequest;
     }
 
