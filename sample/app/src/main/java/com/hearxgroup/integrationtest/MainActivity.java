@@ -18,6 +18,12 @@ import com.hearxgroup.mhealthintegration.Util;
 
 import java.util.UUID;
 
+import static com.hearxgroup.hearx.Constants.CODE_UNSET;
+import static com.hearxgroup.hearx.Constants.INDEX_HEARSCOPE;
+import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
+import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
+import static com.hearxgroup.hearx.Constants.INDEX_SEALCHECK;
+
 public class MainActivity extends AppCompatActivity implements MHealthTestRetrieverContract.ContentRetrieverInterface {
 
     private final String TAG = getClass().getSimpleName();
@@ -86,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
                         testId, //UNIQUE TEST ID
                         "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //REPLACE WITH ACTION NAME AS DEFINED IN YOUR MANIFEST
                         patient, //PATIENT OBJECT OR NULL
-                        CODE_UNSET); //REQUIRED TEST INDEX OR -1
+                        CODE_UNSET); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
         //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
         String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
         if(requestValidationResponse==null)
