@@ -52,7 +52,8 @@ MHealthTestRequest testRequest =
          MHealthTestRequest.build(
                  testId, //UNIQUE TEST ID
                  YOUR_RETURN_INTENT_ACTION_NAME, //ACTION NAME AS DEFINED IN YOUR MANIFEST
-                 demoPatient); //PATIENT OBJECT OR NULL
+                 demoPatient, //PATIENT OBJECT OR NULL
+                 INDEX_HEARSCREEN); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
 String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
 if(requestValidationResponse==null)
