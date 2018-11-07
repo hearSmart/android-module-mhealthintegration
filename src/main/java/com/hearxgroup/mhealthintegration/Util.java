@@ -7,6 +7,7 @@ import static com.hearxgroup.hearx.Constants.CODE_UNSET;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARSCOPE;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
+import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 import static com.hearxgroup.hearx.Constants.INDEX_SEALCHECK;
 
 /**
@@ -36,7 +37,7 @@ public class Util {
 
             //TEST requested testIndex
             int testIndex = testRequest.getTestIndex();
-            if(testIndex==CODE_UNSET || testIndex==INDEX_HEARSCREEN || testIndex==INDEX_HEARTEST || testIndex==INDEX_HEARSCOPE || testIndex==INDEX_SEALCHECK)
+            if(testIndex==CODE_UNSET || testIndex==INDEX_HEARSCREEN || testIndex==INDEX_HEARTEST || testIndex==INDEX_PEEK || testIndex==INDEX_HEARSCOPE || testIndex==INDEX_SEALCHECK)
                 return null; //VALIDATION PASSED
             else
                 return "Invalid testIndex parameter";
