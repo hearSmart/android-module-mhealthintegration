@@ -30,5 +30,6 @@ dependencies {
 
     //REQUIRED LIBRARIES
     implementation 'com.github.hearSmart:android-module-mhealthintegration:v2001'
+    implementation 'com.android.support:design:27.1.1'
     annotationProcessor "org.projectlombok:lombok:1.16.18"
 }

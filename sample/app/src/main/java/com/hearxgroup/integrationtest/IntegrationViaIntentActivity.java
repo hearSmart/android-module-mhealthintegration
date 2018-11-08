@@ -18,21 +18,19 @@ import com.hearxgroup.mhealthintegration.Util;
 
 import java.util.UUID;
 
-import static com.hearxgroup.hearx.Constants.CODE_UNSET;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARSCOPE;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
 import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
-import static com.hearxgroup.hearx.Constants.INDEX_SEALCHECK;
 
-public class MainActivity extends AppCompatActivity implements MHealthTestRetrieverContract.ContentRetrieverInterface {
+/**
+ * This activity showcases how an integration would proceed using intents and the ContentRetrieverInterface to retrieve data directly from the mHealth app
+ */
+public class IntegrationViaIntentActivity extends AppCompatActivity implements MHealthTestRetrieverContract.ContentRetrieverInterface {
 
     private final String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_integration_via_intent);
         findViewById(R.id.btn_test).setOnClickListener(v -> {
             requestMHTest(buildTestPatient()); //REQUEST TEST WITH PATIENT
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
@@ -59,29 +57,12 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
             Log.d(TAG, "mHealthGeneratedTestId: "+mHealthGeneratedTestId);
             Log.d(TAG, "testType: "+TestRequestHelper.getTestTypeFromIntent(intent));
             TestRequestHelper.retrieveTestResult(
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     getLoaderManager(),
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     TestRequestHelper.getTestTypeFromIntent(intent),
                     mHealthGeneratedTestId);
         }
-    }
-
-    private String getRandomSequence() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
-
-    private Patient buildTestPatient() {
-        return Patient.build(
-                "John",//firstName
-                "Smith",//lastName
-                "1989-09-15",//YYYY-MM-dd
-                "male", //male/female
-                "eng",//iso3 languageCode
-                null,//email
-                null,//contactNumber
-                null,//identificationNumber (Users national identification number)
-                null);//referenceNumber (Any reference string you have to connect with your system)
     }
 
     private void requestMHTest(@Nullable Patient patient) {
@@ -92,13 +73,13 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
                 MHealthTestRequest.build(
                         testId, //UNIQUE TEST ID
                         "com.hearxgroup.mhealthintegrationdemo.mhealthtest", //REPLACE WITH ACTION NAME AS DEFINED IN YOUR MANIFEST
-                        null,//patient, //PATIENT OBJECT OR NULL
+                        patient, //PATIENT OBJECT OR NULL
                         INDEX_PEEK); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
         //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
-        String requestValidationResponse = Util.validateTestRequest(MainActivity.this, testRequest);
+        String requestValidationResponse = Util.validateTestRequest(IntegrationViaIntentActivity.this, testRequest);
         if(requestValidationResponse==null)
             //VALIDATION WAS PASSED, INITIATE TEST REQUEST
-            TestRequestHelper.startTest(MainActivity.this, testRequest);
+            TestRequestHelper.startTest(IntegrationViaIntentActivity.this, testRequest);
         else
             //VALIDATION ERROR OCCURRED
             Log.e(TAG, "Validation error:"+requestValidationResponse);
@@ -111,9 +92,9 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         Log.d(TAG, "generatedPatientId: "+hearscreenTest.getGeneratedPatientId());
         if(hearscreenTest.getGeneratedPatientId()!=null)
             TestRequestHelper.retrievePatient(
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     getLoaderManager(),
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     hearscreenTest.getGeneratedPatientId());
     }
 
@@ -124,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         Log.d(TAG, "generatedPatientId: "+heartestTest.getGeneratedPatientId());
         if(heartestTest.getGeneratedPatientId()!=null) {
             TestRequestHelper.retrievePatient(
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     getLoaderManager(),
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     heartestTest.getGeneratedPatientId());
         }
     }
@@ -138,9 +119,9 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
         Log.d(TAG, "generatedPatientId: "+peekAcuityTest.getGeneratedPatientId());
         if(peekAcuityTest.getGeneratedPatientId()!=null)
             TestRequestHelper.retrievePatient(
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     getLoaderManager(),
-                    MainActivity.this,
+                    IntegrationViaIntentActivity.this,
                     peekAcuityTest.getGeneratedPatientId());
     }
 
@@ -159,5 +140,22 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     @Override
     public void onRetrieveContentError(String errorMessage) {
         Log.e(TAG, "onRetrieveContentError: "+errorMessage);
+    }
+
+    private String getRandomSequence() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    private Patient buildTestPatient() {
+        return Patient.build(
+                "John",//firstName
+                "Smith",//lastName
+                "1989-09-15",//YYYY-MM-dd
+                "male", //male/female
+                "eng",//iso3 languageCode
+                null,//email
+                null,//contactNumber
+                null,//identificationNumber (Users national identification number)
+                null);//referenceNumber (Any reference string you have to connect with your system)
     }
 }
