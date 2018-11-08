@@ -28,7 +28,6 @@ import java.util.UUID;
 import io.reactivex.Single;
 
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
-import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 
 /**
  * This activity showcases how an integration would proceed using files to request and retrieve data from the mHealth app
