@@ -5,6 +5,9 @@ The library provides mechanisms to both request tests and retrieve test, patient
 
 ## Getting Started
 Note. A sample application using this library is provided in the 'sample' directory
+Refer to the IntegrationViaIntentActivity for most common usage of mHealth integration. (Recommended)
+
+You may also refer to IntegrationViaFileActivity if your application is not able to receive intent data from external applications (Not recommended)
 
 ### Prerequisites
 1. Include the following in your app build.gradle file
@@ -110,6 +113,9 @@ TestRequestHelper.retrievePatient(
                   MainActivity.this,
                   patientId); //OBTAIN FROM TEST ENTRY
 ```
+The above instructions assume you are using the process as shown in the IntegrationViaIntentActivity
+Refer to the IntegrationViaFileActivity if your application is not capable of receiving intent data from external applications
+
 ## License
 
 This project is licensed under the MIT License

@@ -97,9 +97,9 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                         Logger.d(TAG, "jsonFileContents:" + jsonFileContents);
                         //RETRIEVE TEST FROM FILE AND DO WHAT YOU WILL WITH TEST OBJECT
                         switch(testType) {
-                            case INDEX_HEARSCREEN: getHearScreenTestFromJson(jsonFileContents); break;
-                            case INDEX_HEARTEST: getHearTestTestFromJson(jsonFileContents);  break;
-                            case INDEX_PEEK: getPeekAcuityTestFromJson(jsonFileContents);  break;
+                            case INDEX_HEARSCREEN: Util.buildHearScreenTestFromJson(jsonFileContents); break;
+                            case INDEX_HEARTEST: Util.buildHearTestTestFromJson(jsonFileContents);  break;
+                            case INDEX_PEEK: Util.buildPeekAcuityTestFromJson(jsonFileContents);  break;
                         }
                         removeFile(readPath)
                                 .subscribe(deleteStatus -> Logger.d(TAG, "deleteStatus:" + deleteStatus));
@@ -107,25 +107,6 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
         }
         else
             Log.d(TAG, "file does not exist");
-    }
-
-    private HeartestTest getHearTestTestFromJson(String jsonFileContents) {
-        HeartestTest testObject = HeartestTest.fromJson(jsonFileContents);
-        testObject.setFrequencyResults(new Gson().fromJson(testObject.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
-        testObject.setFrequencyResultsJson(null);
-        return testObject;
-    }
-
-    private HearscreenTest getHearScreenTestFromJson(String jsonFileContents) {
-        HearscreenTest testObject = HearscreenTest.fromJson(jsonFileContents);
-        testObject.setFrequencyResults(new Gson().fromJson(testObject.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
-        testObject.setFrequencyResultsJson(null);
-        return testObject;
-    }
-
-    private PeekAcuityTest getPeekAcuityTestFromJson(String jsonFileContents) {
-        PeekAcuityTest testObject = PeekAcuityTest.fromJson(jsonFileContents);
-        return testObject;
     }
 
     private void requestMHTest(@Nullable Patient patient) {

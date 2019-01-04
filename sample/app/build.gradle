@@ -29,8 +29,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     //REQUIRED LIBRARIES
-    //implementation 'com.github.hearSmart:android-module-mhealthintegration:v2001'
-    implementation 'com.github.hearSmart:android-module-mhealthintegration:master-SNAPSHOT'
+    implementation 'com.github.hearSmart:android-module-mhealthintegration:v2002'
 
     implementation 'com.android.support:design:27.1.1'
     annotationProcessor "org.projectlombok:lombok:1.16.18"

@@ -41,7 +41,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 2002
-        versionName "2002-DEV"
+        versionName "2002"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
