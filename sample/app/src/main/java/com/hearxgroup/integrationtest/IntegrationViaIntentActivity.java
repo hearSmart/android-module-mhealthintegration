@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.hearxgroup.hearx.NiftyUtil;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.Facility;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
@@ -32,10 +33,12 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_integration_via_intent);
+        //ONCLICK LISTENER FOR REQUESTING A TEST
         findViewById(R.id.btn_test).setOnClickListener(v -> {
             requestMHTest(buildTestPatient()); //REQUEST TEST WITH PATIENT
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
+        //HANDLE NEW INTENT
         onNewIntent(getIntent());
     }
 
@@ -57,6 +60,8 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
             Log.d(TAG, "RETURN FROM AN MHEALTH TEST REQUEST OCCURRED");
             Log.d(TAG, "mHealthGeneratedTestId: "+mHealthGeneratedTestId);
             Log.d(TAG, "testType: "+TestRequestHelper.getTestTypeFromIntent(intent));
+
+            //RETRIEVE TEST RESULT FROM MHEALTH APP VIA A LOADER MANAGER
             TestRequestHelper.retrieveTestResult(
                     IntegrationViaIntentActivity.this,
                     getLoaderManager(),
@@ -68,7 +73,7 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
 
     private void requestMHTest(@Nullable Patient patient) {
         //GENERATE UNIQUE 24 CHAR TEST ID
-        String testId = getRandomSequence();
+        String testId = NiftyUtil.getRandomSequence();
         //BUILD TEST REQUEST
         MHealthTestRequest testRequest =
                 MHealthTestRequest.build(
@@ -143,14 +148,10 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         Log.e(TAG, "onRetrieveContentError: "+errorMessage);
     }
 
-    private String getRandomSequence() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
-
     private Patient buildTestPatient() {
         return Patient.build(
-                "John",//firstName
-                "Smith",//lastName
+                "Example",//firstName
+                "Patient",//lastName
                 "1989-09-15",//YYYY-MM-dd
                 "male", //male/female
                 "eng",//iso3 languageCode

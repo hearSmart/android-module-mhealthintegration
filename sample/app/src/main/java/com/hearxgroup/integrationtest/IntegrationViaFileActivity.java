@@ -13,12 +13,17 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hearxgroup.encryption.Logger;
+import com.hearxgroup.hearx.Constants;
 import com.hearxgroup.hearx.FileUtil;
 import com.hearxgroup.hearx.MiscUtils;
+import com.hearxgroup.hearx.NiftyUtil;
+import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
+import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
 
@@ -26,10 +31,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.UUID;
 
 import io.reactivex.Single;
 
+import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
 import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 
@@ -78,19 +83,24 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
         //0. RETRIEVE TEST TYPE FROM RECEIVED INTENT (OPTIONAL)
         //1. READ FILE CONTENTS
         //2. DELETE FILE
-        //TOD CHANGE StringString readPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest_complete.txt";
+
+        //RETRIEVE THE COMPLETED TEST PATH CONSTANT FROM THE HEARX LIB
+        String readPath = new Constants().getTestCompletePath();
         File file = new File(readPath);
         if(file.exists()) {
             Log.d(TAG, "file exists!");
-            //YOU CAN RETRIEVE THE TEST TYPE
+            //YOU CAN RETRIEVE THE TEST TYPE LIKE THIS IF NECESSARY
             int testType = TestRequestHelper.getTestTypeFromIntent(intent);
             Log.d(TAG, "testType: "+testType);
-
             readFile(readPath)
                     .subscribe(jsonFileContents -> {
-                        Logger.d(TAG, "fileContents:" + jsonFileContents);
-                        //HANDLE FILE CONTENTS
-                        HeartestTest htTest = getHearTestTestFromJson(jsonFileContents)
+                        Logger.d(TAG, "jsonFileContents:" + jsonFileContents);
+                        //RETRIEVE TEST FROM FILE AND DO WHAT YOU WILL WITH TEST OBJECT
+                        switch(testType) {
+                            case INDEX_HEARSCREEN: getHearScreenTestFromJson(jsonFileContents); break;
+                            case INDEX_HEARTEST: getHearTestTestFromJson(jsonFileContents);  break;
+                            case INDEX_PEEK: getPeekAcuityTestFromJson(jsonFileContents);  break;
+                        }
                         removeFile(readPath)
                                 .subscribe(deleteStatus -> Logger.d(TAG, "deleteStatus:" + deleteStatus));
                     });
@@ -100,24 +110,27 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
     }
 
     private HeartestTest getHearTestTestFromJson(String jsonFileContents) {
-        HeartestTest htTest = HeartestTest.fromJson(fileContents);
-        htTest.setFrequencyResults(new Gson().fromJson(htTest.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
-        return htTest;
+        HeartestTest testObject = HeartestTest.fromJson(jsonFileContents);
+        testObject.setFrequencyResults(new Gson().fromJson(testObject.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
+        testObject.setFrequencyResultsJson(null);
+        return testObject;
     }
 
-    //TODO
     private HearscreenTest getHearScreenTestFromJson(String jsonFileContents) {
-
+        HearscreenTest testObject = HearscreenTest.fromJson(jsonFileContents);
+        testObject.setFrequencyResults(new Gson().fromJson(testObject.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
+        testObject.setFrequencyResultsJson(null);
+        return testObject;
     }
 
-    //TODO
-    private PeekvisionTest getPeekVisionTestFromJson(String jsonFileContents) {
-
+    private PeekAcuityTest getPeekAcuityTestFromJson(String jsonFileContents) {
+        PeekAcuityTest testObject = PeekAcuityTest.fromJson(jsonFileContents);
+        return testObject;
     }
 
     private void requestMHTest(@Nullable Patient patient) {
         //GENERATE UNIQUE 24 CHAR TEST ID
-        String testId = NiftyUtil.getRandomSequence()
+        String testId = NiftyUtil.getRandomSequence();
         //BUILD TEST REQUEST
         MHealthTestRequest testRequest =
                 MHealthTestRequest.build(
@@ -126,7 +139,8 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                         patient, //PATIENT OBJECT OR NULL
                         INDEX_HEARTEST); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 
-        //TOD CHANGE String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest.txt";
+        //RETRIEVE THE COMPLETED TEST PATH CONSTANT FROM THE HEARX LIB
+        String filePath = new Constants().getTestCompletePath();
         FileUtil.writeFile(testRequest.toJson(), filePath)
                 .subscribe(writeResult -> {
                     //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST

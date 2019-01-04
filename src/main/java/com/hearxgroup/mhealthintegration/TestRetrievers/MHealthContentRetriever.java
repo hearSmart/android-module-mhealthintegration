@@ -29,6 +29,7 @@ import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
 import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
+import com.hearxgroup.mhealthintegration.Util;
 
 import static com.hearxgroup.hearx.Constants.*;
 
@@ -106,24 +107,17 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
         switch(testType) {
             case PROVIDER_CODE_TEST_HEARSCREEN:
                 if(dataJson!=null && dataJson.length()>0) {
-                    HearscreenTest test = HearscreenTest.fromJson(dataJson);
-                    test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
-                    test.setFrequencyResultsJson(null);
-                    listener.onRetrieveTestHearScreen(test);
+                    listener.onRetrieveTestHearScreen(Util.buildHearScreenTestFromJson(dataJson));
                 }
                 break;
             case PROVIDER_CODE_TEST_HEARTEST:
                 if(dataJson!=null && dataJson.length()>0) {
-                    HeartestTest test = HeartestTest.fromJson(dataJson);
-                    test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
-                    test.setFrequencyResultsJson(null);
-                    listener.onRetrieveTestHearTest(test);
+                    listener.onRetrieveTestHearTest(Util.buildHearTestTestFromJson(dataJson));
                 }
                 break;
             case PROVIDER_CODE_TEST_PEEK:
                 if(dataJson!=null && dataJson.length()>0) {
-                    PeekAcuityTest test = PeekAcuityTest.fromJson(dataJson);
-                    listener.onRetrieveTestPeekAcuity(test);
+                    listener.onRetrieveTestPeekAcuity(Util.buildPeekAcuityTestFromJson(dataJson));
                 }
                 break;
             case PROVIDER_CODE_PATIENT:

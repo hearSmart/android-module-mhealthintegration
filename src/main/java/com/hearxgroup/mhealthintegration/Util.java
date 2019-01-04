@@ -1,7 +1,14 @@
 package com.hearxgroup.mhealthintegration;
 
 import android.content.Context;
+
+import com.google.gson.Gson;
+import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
+import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
+import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 
 import static com.hearxgroup.hearx.Constants.CODE_UNSET;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARSCOPE;
@@ -43,5 +50,23 @@ public class Util {
                 return "Invalid testIndex parameter";
         }
 
+    }
+
+    public static HearscreenTest buildHearScreenTestFromJson(String jsonData) {
+        HearscreenTest test = HearscreenTest.fromJson(jsonData);
+        test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
+        test.setFrequencyResultsJson(null);
+        return test;
+    }
+
+    public static HeartestTest buildHearTestTestFromJson(String jsonData) {
+        HeartestTest test = HeartestTest.fromJson(jsonData);
+        test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
+        test.setFrequencyResultsJson(null);
+        return test;
+    }
+
+    public static PeekAcuityTest buildPeekAcuityTestFromJson(String jsonData) {
+        return PeekAcuityTest.fromJson(jsonData);
     }
 }
