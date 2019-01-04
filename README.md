@@ -5,6 +5,7 @@ The library provides mechanisms to both request tests and retrieve test, patient
 
 ## Getting Started
 Note. A sample application using this library is provided in the 'sample' directory
+```
 Refer to the IntegrationViaIntentActivity for most common usage of mHealth integration. (Recommended)
 
 You may also refer to IntegrationViaFileActivity if your application is not able to receive intent data from external applications (Not recommended)
@@ -12,7 +13,7 @@ You may also refer to IntegrationViaFileActivity if your application is not able
 ### Prerequisites
 1. Include the following in your app build.gradle file
 ```
-implementation 'com.github.hearSmart:android-module-mhealthintegration:v1005'
+implementation 'com.github.hearSmart:android-module-mhealthintegration:v2002'
 annotationProcessor "org.projectlombok:lombok:1.16.18"
 ```
 
@@ -114,6 +115,7 @@ TestRequestHelper.retrievePatient(
                   patientId); //OBTAIN FROM TEST ENTRY
 ```
 The above instructions assume you are using the process as shown in the IntegrationViaIntentActivity
+```
 Refer to the IntegrationViaFileActivity if your application is not capable of receiving intent data from external applications
 
 ## License
