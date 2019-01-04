@@ -11,9 +11,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.hearxgroup.encryption.Logger;
 import com.hearxgroup.hearx.FileUtil;
 import com.hearxgroup.hearx.MiscUtils;
+import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
@@ -28,6 +31,7 @@ import java.util.UUID;
 import io.reactivex.Single;
 
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
+import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 
 /**
  * This activity showcases how an integration would proceed using files to request and retrieve data from the mHealth app
@@ -40,7 +44,7 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_integration_via_file);
-
+        //REQUESTING RELEVANT PERMISSIONS
         if (ContextCompat.checkSelfPermission(IntegrationViaFileActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(IntegrationViaFileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(IntegrationViaFileActivity.this,
@@ -48,11 +52,12 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                             Manifest.permission.READ_EXTERNAL_STORAGE},
                     1);
         }
-
+        //ONCLICK LISTENER FOR REQUESTING A TEST
         findViewById(R.id.btn_test).setOnClickListener(v -> {
             requestMHTest(buildTestPatient()); //REQUEST TEST WITH PATIENT
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
+        //HANDLE NEW INTENT
         onNewIntent(getIntent());
     }
 
@@ -64,7 +69,8 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
     }
 
     /**
-     * Method checks the received intent to see if result came from mHealthStudio app
+     * Method attempts to read extrenal file for data from mHealthApp.
+     *
      * @param intent
      */
     private void handleLaunchIntent(Intent intent) {
@@ -72,18 +78,19 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
         //0. RETRIEVE TEST TYPE FROM RECEIVED INTENT (OPTIONAL)
         //1. READ FILE CONTENTS
         //2. DELETE FILE
-        String readPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest_complete.txt";
+        //TOD CHANGE StringString readPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest_complete.txt";
         File file = new File(readPath);
         if(file.exists()) {
             Log.d(TAG, "file exists!");
-            //IF TEST TYPE IS REQUIRED, OBTAIN AS FOLLOWS:
+            //YOU CAN RETRIEVE THE TEST TYPE
             int testType = TestRequestHelper.getTestTypeFromIntent(intent);
             Log.d(TAG, "testType: "+testType);
 
             readFile(readPath)
-                    .subscribe(fileContents -> {
-                        Logger.d(TAG, "fileContents:" + fileContents);
+                    .subscribe(jsonFileContents -> {
+                        Logger.d(TAG, "fileContents:" + jsonFileContents);
                         //HANDLE FILE CONTENTS
+                        HeartestTest htTest = getHearTestTestFromJson(jsonFileContents)
                         removeFile(readPath)
                                 .subscribe(deleteStatus -> Logger.d(TAG, "deleteStatus:" + deleteStatus));
                     });
@@ -92,18 +99,34 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
             Log.d(TAG, "file does not exist");
     }
 
+    private HeartestTest getHearTestTestFromJson(String jsonFileContents) {
+        HeartestTest htTest = HeartestTest.fromJson(fileContents);
+        htTest.setFrequencyResults(new Gson().fromJson(htTest.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
+        return htTest;
+    }
+
+    //TODO
+    private HearscreenTest getHearScreenTestFromJson(String jsonFileContents) {
+
+    }
+
+    //TODO
+    private PeekvisionTest getPeekVisionTestFromJson(String jsonFileContents) {
+
+    }
+
     private void requestMHTest(@Nullable Patient patient) {
         //GENERATE UNIQUE 24 CHAR TEST ID
-        String testId = getRandomSequence();
+        String testId = NiftyUtil.getRandomSequence()
         //BUILD TEST REQUEST
         MHealthTestRequest testRequest =
                 MHealthTestRequest.build(
                         testId, //UNIQUE TEST ID
-                        "com.hearxgroup.mhealthintegrationdemo.mhealthtestviafile", //REPLACE WITH ACTION NAME AS DEFINED IN YOUR MANIFEST
+                        "com.hearxgroup.mhealthintegrationdemo.mhealthtestviafile",// use action name as defined in your manifest OR use "close" if you just want mHealth app to close after a test
                         patient, //PATIENT OBJECT OR NULL
                         INDEX_HEARTEST); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 
-        String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest.txt";
+        //TOD CHANGE String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)+"/mhealth/mhealthtest.txt";
         FileUtil.writeFile(testRequest.toJson(), filePath)
                 .subscribe(writeResult -> {
                     //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
@@ -117,17 +140,13 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                 });
     }
 
-    private String getRandomSequence() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
-
     private Patient buildTestPatient() {
         return Patient.build(
-                "John",//firstName
-                "Smith",//lastName
+                "Example",//firstName
+                "Patient",//lastName
                 "1989-09-15",//YYYY-MM-dd
                 "male", //male/female
-                "eng",//iso3 languageCode
+                "eng",//iso3 languageCode of patient first language
                 null,//email
                 null,//contactNumber
                 null,//identificationNumber (Users national identification number)

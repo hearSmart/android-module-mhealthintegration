@@ -8,9 +8,10 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
@@ -39,8 +40,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 2001
-        versionName "2001"
+        versionCode 2002
+        versionName "2002-DEV"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,7 +52,7 @@ android {
         }
     }
 
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -62,7 +63,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    api 'com.github.hearSmart:android-module-hearx:v1005'
+    api 'com.github.hearSmart:android-module-hearx:v1008'
     //LOMBOK
     implementation 'org.projectlombok:lombok:1.16.18'
     //GSON
