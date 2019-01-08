@@ -118,10 +118,10 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                         testId, //UNIQUE TEST ID
                         "com.hearxgroup.mhealthintegrationdemo.mhealthtestviafile",// use action name as defined in your manifest OR use "close" if you just want mHealth app to close after a test
                         patient, //PATIENT OBJECT OR NULL
-                        INDEX_HEARTEST); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
+                        INDEX_PEEK); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 
-        //RETRIEVE THE COMPLETED TEST PATH CONSTANT FROM THE HEARX LIB
-        String filePath = new Constants().getTestCompletePath();
+        //RETRIEVE THE REQUESTED TEST PATH CONSTANT FROM THE HEARX LIB
+        String filePath = new Constants().getTestRequestPath();
         FileUtil.writeFile(testRequest.toJson(), filePath)
                 .subscribe(writeResult -> {
                     //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
