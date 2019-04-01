@@ -25,15 +25,12 @@ import java.util.regex.Pattern;
 
 import io.michaelrocks.libphonenumber.android.NumberParseException;
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
-import lombok.Getter;
-import lombok.Setter;
 
 import static com.hearxgroup.hearx.Constants.TEXT_GENDER_FEMALE;
 import static com.hearxgroup.hearx.Constants.TEXT_GENDER_MALE;
 
-@Getter
-@Setter
 public class Patient {
+
     @SerializedName("first_name")
     private String firstName;
     @SerializedName("last_name")
@@ -129,5 +126,77 @@ public class Patient {
     private boolean isValidEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
+    }
+
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
+
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
     }
 }

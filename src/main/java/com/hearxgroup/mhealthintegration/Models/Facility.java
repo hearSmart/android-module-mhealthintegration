@@ -13,13 +13,10 @@ package com.hearxgroup.mhealthintegration.Models;
 import android.support.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class Facility {
     public static final String TAG = Facility.class.getSimpleName();
+
     private String name;
     private String email;
     @SerializedName("contact_number")
@@ -59,5 +56,61 @@ public class Facility {
 
     public String toJson() {
         return new Gson().toJson(this);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 }

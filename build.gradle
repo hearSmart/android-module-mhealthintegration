@@ -32,7 +32,7 @@ allprojects {
 
 android {
     configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
+        //resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
         exclude group: 'com.android.support', module: 'support-v13'
     }
     compileSdkVersion 27
@@ -41,7 +41,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 2003
-        versionName "2003-DEV"
+        versionName "2003-BETA1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -52,7 +52,6 @@ android {
         }
     }
 
-    buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -63,15 +62,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    api 'com.github.hearSmart:android-module-hearx:v1008'
-    //LOMBOK
-    implementation 'org.projectlombok:lombok:1.16.18'
+    api 'com.github.hearSmart:android-module-hearx:v1012'
     //GSON
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     //PHONENUMBER
-    implementation 'io.michaelrocks:libphonenumber-android:8.9.9'
+    implementation 'io.michaelrocks:libphonenumber-android:8.10.7'
     //JODA TIME
     implementation 'joda-time:joda-time:2.9.9'
-
-    annotationProcessor "org.projectlombok:lombok:1.16.18"
 }

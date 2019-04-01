@@ -5,18 +5,14 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Copyright (c) 2017 hearX Group (Pty) Ltd. All rights reserved
  * Created by David Howe on 2018/07/27.
  * hearX Group (Pty) Ltd.
  * info@hearxgroup.com
  */
-@Getter
-@Setter
 public class MHealthTestRequest {
+
     @NonNull
     private String generatedId; //24 character length randomly generated string *NB REQUIRED
     @Nullable
@@ -45,5 +41,40 @@ public class MHealthTestRequest {
 
     public String toJson() {
         return new Gson().toJson(this);
+    }
+
+    @NonNull
+    public String getGeneratedId() {
+        return generatedId;
+    }
+
+    public void setGeneratedId(@NonNull String generatedId) {
+        this.generatedId = generatedId;
+    }
+
+    @Nullable
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(@Nullable Patient patient) {
+        this.patient = patient;
+    }
+
+    @NonNull
+    public String getReturnIntentActionName() {
+        return returnIntentActionName;
+    }
+
+    public void setReturnIntentActionName(@NonNull String returnIntentActionName) {
+        this.returnIntentActionName = returnIntentActionName;
+    }
+
+    public int getTestIndex() {
+        return testIndex;
+    }
+
+    public void setTestIndex(int testIndex) {
+        this.testIndex = testIndex;
     }
 }
