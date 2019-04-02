@@ -1,3 +1,9 @@
+/*
+ * Copyright © 2018 - 2019 hearX IP (Pty) Ltd.
+ * Copyright subsists in this work and it is copyright protected under the Berne Convention.  No part of this work may be reproduced, published, performed, broadcasted, adapted or transmitted in any form or by any means, electronic or mechanical, including photocopying, recording or by any information storage and retrieval system, without permission in writing from the copyright owner
+ * hearX Group (Pty) Ltd.
+ */
+
 package com.hearxgroup.integrationtest;
 
 import android.Manifest;
@@ -31,6 +37,10 @@ import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
 import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 
+/**
+ * Created by David Howe
+ * hearX Group (Pty) Ltd.
+ */
 /**
  * This activity showcases how an integration would proceed using files to request and retrieve data from the mHealth app
  */

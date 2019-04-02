@@ -2,7 +2,6 @@
  * Copyright © 2018 - 2019 hearX IP (Pty) Ltd.
  * Copyright subsists in this work and it is copyright protected under the Berne Convention.  No part of this work may be reproduced, published, performed, broadcasted, adapted or transmitted in any form or by any means, electronic or mechanical, including photocopying, recording or by any information storage and retrieval system, without permission in writing from the copyright owner
  * hearX Group (Pty) Ltd.
- * info@hearxgroup.com
  */
 
 apply plugin: 'com.android.application'
@@ -14,7 +13,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 1008
-        versionName "1008-BETA1"
+        versionName "1008"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
