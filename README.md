@@ -13,8 +13,7 @@ You may also refer to IntegrationViaFileActivity if your application is not able
 ### Prerequisites
 1. Include the following in your app build.gradle file
 ```
-implementation 'com.github.hearSmart:android-module-mhealthintegration:v2002'
-annotationProcessor "org.projectlombok:lombok:1.16.18"
+implementation 'com.github.hearSmart:android-module-mhealthintegration:v2003'
 ```
 
 2. Ensure you have jitpack maven repo defined in your top level build.gradle repositories list
@@ -55,7 +54,7 @@ Patient demoPatient = Patient.build(
 MHealthTestRequest testRequest =
          MHealthTestRequest.build(
                  testId, //UNIQUE TEST ID
-                 YOUR_RETURN_INTENT_ACTION_NAME, //ACTION NAME AS DEFINED IN YOUR MANIFEST
+                 YOUR_RETURN_INTENT_ACTION_NAME, //ACTION NAME AS DEFINED IN YOUR MANIFEST OR use "close" if you just want mHealth app to close after a test
                  demoPatient, //PATIENT OBJECT OR NULL
                  INDEX_HEARSCREEN); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
