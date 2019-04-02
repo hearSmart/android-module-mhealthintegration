@@ -1,3 +1,10 @@
+/*
+ * Copyright © 2018 - 2019 hearX IP (Pty) Ltd.
+ * Copyright subsists in this work and it is copyright protected under the Berne Convention.  No part of this work may be reproduced, published, performed, broadcasted, adapted or transmitted in any form or by any means, electronic or mechanical, including photocopying, recording or by any information storage and retrieval system, without permission in writing from the copyright owner
+ * hearX Group (Pty) Ltd.
+ * info@hearxgroup.com
+ */
+
 package com.hearxgroup.mhealthintegration;
 
 import android.content.Context;
@@ -18,10 +25,8 @@ import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 import static com.hearxgroup.hearx.Constants.INDEX_SEALCHECK;
 
 /**
- * Copyright (c) 2017 hearX Group (Pty) Ltd. All rights reserved
- * Created by David Howe on 2018/07/27.
+ * Created by David Howe
  * hearX Group (Pty) Ltd.
- * info@hearxgroup.com
  */
 public class Util {
 

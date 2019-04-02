@@ -1,11 +1,8 @@
 /*
- *
- * *
- *  Copyright (c) 2016-2018 hearX Group (Pty) Ltd. All rights reserved
- *  Contact info@hearxgroup.com
- *  Created by David Howe
- *  Last modified David Howe on 2018/02/21 10:49 AM
- * /
+ * Copyright © 2018 - 2019 hearX IP (Pty) Ltd.
+ * Copyright subsists in this work and it is copyright protected under the Berne Convention.  No part of this work may be reproduced, published, performed, broadcasted, adapted or transmitted in any form or by any means, electronic or mechanical, including photocopying, recording or by any information storage and retrieval system, without permission in writing from the copyright owner
+ * hearX Group (Pty) Ltd.
+ * info@hearxgroup.com
  */
 
 package com.hearxgroup.mhealthintegration.Models;
@@ -14,10 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Copyright (c) 2017 hearX Group (Pty) Ltd. All rights reserved
- * Created by David Howe on 2018/07/27.
+ * Created by David Howe
  * hearX Group (Pty) Ltd.
- * info@hearxgroup.com
  */
 public class PeekAcuityTest {
 

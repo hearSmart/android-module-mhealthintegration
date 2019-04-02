@@ -17,8 +17,7 @@ import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
 
-import java.util.UUID;
-
+import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
 import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
 import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
 

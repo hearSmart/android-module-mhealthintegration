@@ -1,11 +1,8 @@
 /*
- *
- * *
- *  Copyright (c) 2016-2018 hearX Group (Pty) Ltd. All rights reserved
- *  Contact info@hearxgroup.com
- *  Created by David Howe
- *  Last modified David Howe on 2018/03/08 10:30 PM
- * /
+ * Copyright © 2018 - 2019 hearX IP (Pty) Ltd.
+ * Copyright subsists in this work and it is copyright protected under the Berne Convention.  No part of this work may be reproduced, published, performed, broadcasted, adapted or transmitted in any form or by any means, electronic or mechanical, including photocopying, recording or by any information storage and retrieval system, without permission in writing from the copyright owner
+ * hearX Group (Pty) Ltd.
+ * info@hearxgroup.com
  */
 
 package com.hearxgroup.mhealthintegration.Models;
@@ -29,6 +26,10 @@ import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 import static com.hearxgroup.hearx.Constants.TEXT_GENDER_FEMALE;
 import static com.hearxgroup.hearx.Constants.TEXT_GENDER_MALE;
 
+/**
+ * Created by David Howe
+ * hearX Group (Pty) Ltd.
+ */
 public class Patient {
 
     @SerializedName("first_name")

@@ -4,26 +4,19 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.hearxgroup.encryption.Logger;
+
 import com.hearxgroup.hearx.Constants;
 import com.hearxgroup.hearx.FileUtil;
 import com.hearxgroup.hearx.MiscUtils;
 import com.hearxgroup.hearx.NiftyUtil;
-import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
-import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
-import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
-import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
-import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
 
@@ -94,7 +87,7 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
             Log.d(TAG, "testType: "+testType);
             readFile(readPath)
                     .subscribe(jsonFileContents -> {
-                        Logger.d(TAG, "jsonFileContents:" + jsonFileContents);
+                        Log.d(TAG, "jsonFileContents:" + jsonFileContents);
                         //RETRIEVE TEST FROM FILE AND DO WHAT YOU WILL WITH TEST OBJECT
                         switch(testType) {
                             case INDEX_HEARSCREEN: Util.buildHearScreenTestFromJson(jsonFileContents); break;
@@ -102,7 +95,7 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                             case INDEX_PEEK: Util.buildPeekAcuityTestFromJson(jsonFileContents);  break;
                         }
                         removeFile(readPath)
-                                .subscribe(deleteStatus -> Logger.d(TAG, "deleteStatus:" + deleteStatus));
+                                .subscribe(deleteStatus -> Log.d(TAG, "deleteStatus:" + deleteStatus));
                     });
         }
         else
@@ -118,7 +111,7 @@ public class IntegrationViaFileActivity extends AppCompatActivity {
                         testId, //UNIQUE TEST ID
                         "com.hearxgroup.mhealthintegrationdemo.mhealthtestviafile",// use action name as defined in your manifest OR use "close" if you just want mHealth app to close after a test
                         patient, //PATIENT OBJECT OR NULL
-                        INDEX_PEEK); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
+                        INDEX_HEARTEST); //REQUIRED TEST(INDEX_HEARSCREEN, INDEX_HEARTEST, INDEX_PEEK, INDEX_SEALCHECK, INDEX_HEARSCOPE, CODE_UNSET)
 
         //RETRIEVE THE REQUESTED TEST PATH CONSTANT FROM THE HEARX LIB
         String filePath = new Constants().getTestRequestPath();
