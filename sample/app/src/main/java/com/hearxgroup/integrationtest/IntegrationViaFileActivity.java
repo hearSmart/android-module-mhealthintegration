@@ -42,7 +42,7 @@ import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
  * hearX Group (Pty) Ltd.
  */
 /**
- * This activity showcases how an integration would proceed using files to request and retrieve data from the mHealth app
+ *  This activity showcases how an integration would proceed using files to request and retrieve data from the mHealth app
  */
 public class IntegrationViaFileActivity extends AppCompatActivity {
 
