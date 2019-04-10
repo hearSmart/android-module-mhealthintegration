@@ -12,8 +12,8 @@ android {
         applicationId "com.hearxgroup.integrationtest"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 1008
-        versionName "1008"
+        versionCode 1009
+        versionName "1009"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,5 +36,5 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
 
     //REQUIRED LIBRARIES
-    implementation 'com.github.hearSmart:android-module-mhealthintegration:v2003'
+    implementation 'com.github.hearSmart:android-module-mhealthintegration:v2004'
 }
