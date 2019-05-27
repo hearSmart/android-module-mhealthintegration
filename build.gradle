@@ -47,8 +47,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 2004
-        versionName "2004"
+        versionCode 2005
+        versionName "2005-BETA1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,7 +70,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //INTERNAL LIBRARIES
-    api 'com.github.hearSmart:android-module-hearx:v1013'
+    //api 'com.github.hearSmart:android-module-hearx:v1013'
+    api(name: 'android-module-hearx-release-v1014-BETA8', ext: 'aar')
     //GSON
     implementation 'com.google.code.gson:gson:2.8.5'
     //PHONENUMBER
