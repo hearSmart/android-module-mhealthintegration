@@ -121,11 +121,34 @@ Refer to the IntegrationViaFileActivity if your application is not capable of re
 
 States on the Headphone, Device, Apps, Licenses and Updates can be requested through the MHealthStateHelper class
 
-Return contracts are defined in the MHealthStateRetrieverContract class and states defined as enums in the MHealthStateHelper class
+State enums are provided below for all available requests. Note! Additional fields are often returned along with the provided states. See MHealthStateRetrieverContract.ContentRetrieverInterface methods for more info
+```
+public enum HEADPHONE_STATE {
+        UNKNOWN, UNAUTHENTICATED, UNLINKED, UNVERIFIED, UNCALIBRATED, OK
+    }
+
+public enum DEVICE_STATE {
+    UNKNOWN, UNAUTHENTICATED, UNSTANDARDISED, UNSYNCED, OK
+}
+
+public enum APP_STATE {
+    UNKNOWN, UNAUTHENTICATED, NOT_INSTALLED, UPDATE_AVAILABLE, UPDATE_REQUIRED, OK
+}
+
+public enum LICENSE_STATE {
+    UNKNOWN, UNAUTHENTICATED, UNLICENSED, OK
+}
+
+public enum UPDATE_STATE {
+    UNKNOWN, UNAUTHENTICATED, AVAILABLE_ONLINE, AVAILABLE_OFFLINE, NOT_REQUIRED
+}
+```
+
 
 All state requests are asynchronous
 
 If a state cannot be found or an error occurred, an UNKNOWN state is returned
+
 If the user has not signed into the mHealth app, an UNAUTHENTICATED state is returned
 
 ## Function Helpers
@@ -139,7 +162,7 @@ public static void openSyncManager(boolean syncDevice, String returnIntentAction
 
 public static void openUpdateManager(int updateAppIndex, String returnIntentActionName)
 ```
-Please see MHealthFunctionHelper for specific method documentation
+Please see the MHealthFunctionHelper class for specific method documentation
 
 ## License
 
