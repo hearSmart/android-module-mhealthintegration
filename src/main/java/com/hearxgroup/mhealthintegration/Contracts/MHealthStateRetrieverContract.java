@@ -7,6 +7,8 @@
 
 package com.hearxgroup.mhealthintegration.Contracts;
 
+import android.support.annotation.Nullable;
+
 import com.hearxgroup.mhealthintegration.MHealthStateHelper;
 
 /**
@@ -16,8 +18,13 @@ import com.hearxgroup.mhealthintegration.MHealthStateHelper;
 public class MHealthStateRetrieverContract {
 
     public interface ContentRetrieverInterface {
-        void onRetrieveStateHeadphone(MHealthStateHelper.HEADPHONE_STATE status);
+        void onRetrieveStateHeadphone(MHealthStateHelper.HEADPHONE_STATE status,
+                                      @Nullable String serialNumber,
+                                      @Nullable String model,
+                                      int calibrationDaysRemaining);
         void onRetrieveStateDevice(MHealthStateHelper.DEVICE_STATE status);
         void onRetrieveStateApp(int appIndex, MHealthStateHelper.APP_STATE appState);
+        void onRetrieveStateLicense(int appIndex, int creditBalance, MHealthStateHelper.LICENSE_STATE appState);
+        void onRetrieveStateUpdate(int appIndex, @Nullable String apkUpdatePath, MHealthStateHelper.UPDATE_STATE appState);
     }
 }
