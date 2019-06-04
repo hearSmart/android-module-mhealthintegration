@@ -119,9 +119,11 @@ Refer to the IntegrationViaFileActivity if your application is not capable of re
 
 ## State Retrieval
 
-States on the Headphone, Device, Apps, Licenses and Updates can be requested through the [MHealthStateHelper class](https://github.com/hearSmart/android-module-mhealthintegration/blob/dev_phulukisa/src/main/java/com/hearxgroup/mhealthintegration/MHealthStateHelper.java)
+States on the Headphone, Device, Apps, Licenses and Updates can be requested through the [MHealthStateHelper class](src/main/java/com/hearxgroup/mhealthintegration/MHealthStateHelper.java)
 
-State enums are provided below for all available requests. Note! Additional fields are often returned along with the provided states. See MHealthStateRetrieverContract.ContentRetrieverInterface methods for more info
+The return contract for the state requests are defined in the [MHealthStateRetrieverContract class](src/main/java/com/hearxgroup/mhealthintegration/Contracts/MHealthStateRetrieverContract.java)
+
+State enums are provided below for all available requests. Note! Additional fields are often returned along with the provided states.
 ```
 public enum HEADPHONE_STATE {
         UNKNOWN, UNAUTHENTICATED, UNLINKED, UNVERIFIED, UNCALIBRATED, OK
@@ -153,7 +155,7 @@ If the user has not signed into the mHealth app, an UNAUTHENTICATED state is ret
 
 ## Function Helpers
 
-The following functions are provided in the MHealthFunctionHelper class to help resolve issues that may arise after state retrieval
+The following functions launch specific components within mHealth and upon completion, will return to the provided returnIntentActionName(If resolved). See [MHealthFunctionHelper class](src/main/java/com/hearxgroup/mhealthintegration/MHealthFunctionHelper.java)
 
 ```
 public static void openHeadphoneManager(boolean verification, String returnIntentActionName)
@@ -162,9 +164,6 @@ public static void openSyncManager(boolean syncDevice, String returnIntentAction
 
 public static void openUpdateManager(int updateAppIndex, String returnIntentActionName)
 ```
-These functions will directly launch the specific components within mHealth and, upon completion will return to the provided returnIntentActionName(If resolved)
-
-Please see the MHealthFunctionHelper class for specific method documentation
 
 ## License
 
