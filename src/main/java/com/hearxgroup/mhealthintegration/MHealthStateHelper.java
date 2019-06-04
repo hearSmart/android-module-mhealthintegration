@@ -58,7 +58,7 @@ public class MHealthStateHelper {
     }
 
     /**
-     * Method used to request the status of status of a given app
+     * Method used to request the status of a given app
      * @param context
      * @param loaderManager
      * @param callback
