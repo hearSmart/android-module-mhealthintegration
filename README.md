@@ -117,6 +117,30 @@ The above instructions assume you are using the process as shown in the Integrat
 
 Refer to the IntegrationViaFileActivity if your application is not capable of receiving intent data from external applications
 
+## State Retrieval
+
+States on the Headphone, Device, Apps, Licenses and Updates can be requested through the MHealthStateHelper class
+
+Return contracts are defined in the MHealthStateRetrieverContract class and states defined as enums in the MHealthStateHelper class
+
+All state requests are asynchronous
+
+If a state cannot be found or an error occurred, an UNKNOWN state is returned
+If the user has not signed into the mHealth app, an UNAUTHENTICATED state is returned
+
+## Function Helpers
+
+The following functions are provided in the MHealthFunctionHelper class to help resolve issues that may arise after state retrieval
+
+```
+public static void openHeadphoneManager(boolean verification, String returnIntentActionName)
+
+public static void openSyncManager(boolean syncDevice, String returnIntentActionName)
+
+public static void openUpdateManager(int updateAppIndex, String returnIntentActionName)
+```
+Please see MHealthFunctionHelper for specific method documentation
+
 ## License
 
 This project is licensed under the MIT License
