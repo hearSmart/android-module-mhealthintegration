@@ -8,27 +8,32 @@
 package com.hearxgroup.mhealthintegration;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
-import com.hearxgroup.mhealthintegration.Models.HearscreenFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HearriskTest;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
-import com.hearxgroup.mhealthintegration.Models.HeartestFrequencyResult;
+import com.hearxgroup.mhealthintegration.Models.HearspeechTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
-import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
 
-import static com.hearxgroup.hearx.Constants.CODE_UNSET;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARSCOPE;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARSCREEN;
-import static com.hearxgroup.hearx.Constants.INDEX_HEARTEST;
-import static com.hearxgroup.hearx.Constants.INDEX_PEEK;
-import static com.hearxgroup.hearx.Constants.INDEX_SEALCHECK;
+import com.hearxgroup.mhealthintegration.Models.VulaVisionTest;
+import com.hearxgroup.mhealth.resources.Const;
+import timber.log.Timber;
 
 /**
  * Created by David Howe
  * hearX Group (Pty) Ltd.
  */
 public class Util {
+
+    private static int INDEX_HEARSCREEN = Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARSCREEN).getValue();
+    private static int INDEX_HEARTEST = Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARTEST).getValue();
+    private static int INDEX_VISION = Const.INSTANCE.getAppIndexFromTest(Const.TEST.VISION).getValue();
+    private static int INDEX_HEARSPEECH = Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARSPEECH).getValue();
+    private static int INDEX_HEARRISK = Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARRISK).getValue();
+    private static int INDEX_HEARSCOPE = Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARSCOPE).getValue();
+    private static int INDEX_SEALCHECK = Const.INSTANCE.getAppIndexFromTest(Const.TEST.SEALCHECK).getValue();
 
     public static String validateTestRequest(Context context, MHealthTestRequest testRequest) {
         if(testRequest==null)
@@ -49,7 +54,14 @@ public class Util {
 
             //TEST requested testIndex
             int testIndex = testRequest.getTestIndex();
-            if(testIndex==CODE_UNSET || testIndex==INDEX_HEARSCREEN || testIndex==INDEX_HEARTEST || testIndex==INDEX_PEEK || testIndex==INDEX_HEARSCOPE || testIndex==INDEX_SEALCHECK)
+            if(testIndex== com.hearxgroup.orbit.logic.Const.CODE_UNSET ||
+                    testIndex==INDEX_HEARSCREEN ||
+                    testIndex==INDEX_HEARTEST ||
+                    testIndex==INDEX_VISION ||
+                    testIndex==INDEX_HEARSPEECH ||
+                    testIndex==INDEX_HEARSCOPE ||
+                    testIndex==INDEX_SEALCHECK ||
+                    testIndex==INDEX_HEARRISK)
                 return null; //VALIDATION PASSED
             else
                 return "Invalid testIndex parameter";
@@ -59,19 +71,31 @@ public class Util {
 
     public static HearscreenTest buildHearScreenTestFromJson(String jsonData) {
         HearscreenTest test = HearscreenTest.fromJson(jsonData);
-        test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HearscreenFrequencyResult[].class));
-        test.setFrequencyResultsJson(null);
         return test;
     }
 
     public static HeartestTest buildHearTestTestFromJson(String jsonData) {
-        HeartestTest test = HeartestTest.fromJson(jsonData);
-        test.setFrequencyResults(new Gson().fromJson(test.getFrequencyResultsJson(), HeartestFrequencyResult[].class));
-        test.setFrequencyResultsJson(null);
+
+        Log.d("HeartestTest build","jsonData HearTest -> %s" + jsonData);
+        return HeartestTest.fromJson(jsonData);
+    }
+
+    public static HearspeechTest buildHearSpeechTestFromJson(String jsonData){
+        Log.d("HearSpeechTest Build", "JsonData HearSpeech= " + jsonData);
+        HearspeechTest test = HearspeechTest.Companion.fromJson(jsonData);
+
+        Log.d("HearSpeechTestObj -> ", test.toString());
         return test;
     }
 
-    public static PeekAcuityTest buildPeekAcuityTestFromJson(String jsonData) {
-        return PeekAcuityTest.fromJson(jsonData);
+    public static HearriskTest buildHearRiskTestFromJson(String jsonData){
+        HearriskTest test = HearriskTest.Companion.fromJson(jsonData);
+
+        return test;
+    }
+
+    public static VulaVisionTest buildVulaVisionTestFromJson(String jsonData) {
+        Timber.d("JsonData VulaVision= " + jsonData);
+        return VulaVisionTest.Companion.fromJson(jsonData);
     }
 }

@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by David Howe
  * hearX Group (Pty) Ltd.
  */
-public class HearscreenFrequencyResult //Class to hold info for each test conducted
+public class FrequencyResultHearScreen //Class to hold info for each test conducted
 {
     private int intensity;
     private int frequency;
@@ -27,7 +27,7 @@ public class HearscreenFrequencyResult //Class to hold info for each test conduc
     private boolean conditionTone;
     private int severity;
 
-    public HearscreenFrequencyResult(){}
+    public FrequencyResultHearScreen(){}
 
     public boolean isPatientHeard() {
         return patientHeard;
@@ -93,8 +93,8 @@ public class HearscreenFrequencyResult //Class to hold info for each test conduc
         this.severity = severity;
     }
 
-    public static HearscreenFrequencyResult fromJson(String json) {
-        return new Gson().fromJson(json, HearscreenFrequencyResult.class);
+    public static FrequencyResultHearScreen fromJson(String json) {
+        return new Gson().fromJson(json, FrequencyResultHearScreen.class);
     }
 
     public String toJson() {

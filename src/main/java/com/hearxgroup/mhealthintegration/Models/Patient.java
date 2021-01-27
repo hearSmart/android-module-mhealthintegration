@@ -8,9 +8,10 @@
 package com.hearxgroup.mhealthintegration.Models;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Patterns;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -23,8 +24,9 @@ import java.util.regex.Pattern;
 import io.michaelrocks.libphonenumber.android.NumberParseException;
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 
-import static com.hearxgroup.hearx.Constants.TEXT_GENDER_FEMALE;
-import static com.hearxgroup.hearx.Constants.TEXT_GENDER_MALE;
+import static com.hearxgroup.mhealth.resources.Const.GENDER.male;
+import static com.hearxgroup.mhealth.resources.Const.GENDER.female;
+//import static com.hearxgroup.hearx.Constants.TEXT_GENDER_MALE;
 
 /**
  * Created by David Howe
@@ -84,7 +86,7 @@ public class Patient {
     }
 
     public String validate(Context context) {
-        if (getGender() == null || (!getGender().equalsIgnoreCase(TEXT_GENDER_MALE) && !getGender().equalsIgnoreCase(TEXT_GENDER_FEMALE)))
+        if (getGender() == null || (!getGender().equalsIgnoreCase(male.name()) && !getGender().equalsIgnoreCase(female.name())))
             return "Invalid gender parameter";
         else if (getFirstName() == null || getFirstName().length() < 1)
             return "Invalid first name parameter";

@@ -7,15 +7,21 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.hearxgroup.integrationtest"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1009
         versionName "1009"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
+
+    packagingOptions {
+        pickFirst  'META-INF/*'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -31,10 +37,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    implementation 'com.android.support:design:28.0.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.github.hearSmart:android-module-mhealth-resources:v1.8'
+    implementation 'com.github.hearSmart:android-module-orbit-logic:v1.7'
 
     //REQUIRED LIBRARIES
-    implementation 'com.github.hearSmart:android-module-mhealthintegration:v2004'
+    //implementation 'com.github.hearSmart:android-module-mhealthintegration:v2004'
+    implementation(name: 'mHealthIntegrationLib-V32-release', ext: 'aar') {transitive = true}
 }

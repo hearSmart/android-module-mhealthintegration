@@ -8,10 +8,12 @@
 package com.hearxgroup.mhealthintegration.Contracts;
 
 import com.hearxgroup.mhealthintegration.Models.Facility;
-import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
+import com.hearxgroup.mhealthintegration.Models.HearriskTest;
+import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
+import com.hearxgroup.mhealthintegration.Models.HearspeechTest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
-import com.hearxgroup.mhealthintegration.Models.PeekAcuityTest;
+import com.hearxgroup.mhealthintegration.Models.VulaVisionTest;
 
 /**
  * Created by David Howe
@@ -22,7 +24,9 @@ public class MHealthTestRetrieverContract {
     public interface ContentRetrieverInterface {
         void onRetrieveTestHearScreen(HearscreenTest test);
         void onRetrieveTestHearTest(HeartestTest test);
-        void onRetrieveTestPeekAcuity(PeekAcuityTest test);
+        void onRetrieveTestPeekAcuity(VulaVisionTest test);
+        void onRetrieveTestHearSpeech(HearspeechTest test);
+        void onRetrieveTestHearRisk(HearriskTest test);
         void onRetrievePatient(Patient patient);
         void onRetrieveFacility(Facility facility);
         void onRetrieveContentError(String errorMessage);
