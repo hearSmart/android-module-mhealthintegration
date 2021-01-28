@@ -53,8 +53,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2004
-        versionName "2004"
+        versionCode 2005
+        versionName "2005"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
