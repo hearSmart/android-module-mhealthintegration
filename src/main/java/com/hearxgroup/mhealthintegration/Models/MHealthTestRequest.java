@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.hearxgroup.mhealth.resources.Const;
 
 /**
  * Created by David Howe
@@ -25,18 +26,19 @@ public class MHealthTestRequest {
     @NonNull
     private String returnIntentActionName; //Return intent filter action name
     @NonNull
-    private int testIndex; //use CODE_UNSET if no specific test required
+    private Const.TEST test; //use CODE_UNSET if no specific test required
 
     public static MHealthTestRequest build(
             @NonNull String generatedId,
             @NonNull String returnIntentActionName,
             @Nullable Patient patient,
-            @NonNull int testIndex) {
+            @NonNull Const.TEST test) {
+
         MHealthTestRequest mHealthTestRequest = new MHealthTestRequest();
         mHealthTestRequest.setGeneratedId(generatedId);
         mHealthTestRequest.setReturnIntentActionName(returnIntentActionName);
         mHealthTestRequest.setPatient(patient);
-        mHealthTestRequest.setTestIndex(testIndex);
+        mHealthTestRequest.setTestIndex(test);
         return mHealthTestRequest;
     }
 
@@ -75,11 +77,11 @@ public class MHealthTestRequest {
         this.returnIntentActionName = returnIntentActionName;
     }
 
-    public int getTestIndex() {
-        return testIndex;
+    public Const.TEST getTestIndex() {
+        return test;
     }
 
-    public void setTestIndex(int testIndex) {
-        this.testIndex = testIndex;
+    public void setTestIndex(Const.TEST test) {
+        this.test = test;
     }
 }

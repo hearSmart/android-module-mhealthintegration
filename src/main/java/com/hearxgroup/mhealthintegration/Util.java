@@ -53,15 +53,15 @@ public class Util {
                 return "returnIntentActionName parameter required";
 
             //TEST requested testIndex
-            int testIndex = testRequest.getTestIndex();
-            if(testIndex== com.hearxgroup.orbit.logic.Const.CODE_UNSET ||
-                    testIndex==INDEX_HEARSCREEN ||
-                    testIndex==INDEX_HEARTEST ||
-                    testIndex==INDEX_VISION ||
-                    testIndex==INDEX_HEARSPEECH ||
-                    testIndex==INDEX_HEARSCOPE ||
-                    testIndex==INDEX_SEALCHECK ||
-                    testIndex==INDEX_HEARRISK)
+            Const.TEST testIndex = testRequest.getTestIndex();
+            if(testIndex== null ||
+                    testIndex== Const.TEST.HEARSCREEN ||
+                    testIndex== Const.TEST.HEARTEST ||
+                    testIndex== Const.TEST.VISION ||
+                    testIndex== Const.TEST.HEARSPEECH ||
+                    testIndex== Const.TEST.HEARSCOPE ||
+                    testIndex== Const.TEST.SEALCHECK ||
+                    testIndex== Const.TEST.HEARRISK)
                 return null; //VALIDATION PASSED
             else
                 return "Invalid testIndex parameter";
@@ -84,7 +84,6 @@ public class Util {
         Log.d("HearSpeechTest Build", "JsonData HearSpeech= " + jsonData);
         HearspeechTest test = HearspeechTest.Companion.fromJson(jsonData);
 
-        Log.d("HearSpeechTestObj -> ", test.toString());
         return test;
     }
 

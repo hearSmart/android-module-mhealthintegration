@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.Facility;
@@ -38,15 +39,35 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
 
     private final String TAG = getClass().getSimpleName();
 
+    private TextView tvReturnedData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_integration_via_intent);
         //ONCLICK LISTENER FOR REQUESTING A TEST
-        findViewById(R.id.btn_test).setOnClickListener(v -> {
-            requestMHTest(buildTestPatient()); //REQUEST TEST WITH PATIENT
+
+        tvReturnedData = findViewById(R.id.txt_retrieved_data);
+
+        findViewById(R.id.btn_start_heartest).setOnClickListener(v -> {
+            requestMHTest(buildTestPatient(), Const.TEST.HEARTEST); //REQUEST TEST WITH PATIENT
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
+
+        findViewById(R.id.btn_start_hearscreen).setOnClickListener(v -> {
+            requestMHTest(buildTestPatient(), Const.TEST.HEARSCREEN); //REQUEST TEST WITH PATIENT
+            //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
+        });
+
+      findViewById(R.id.btn_start_hearspeech).setOnClickListener(v -> {
+            requestMHTest(buildTestPatient(), Const.TEST.HEARSPEECH); //REQUEST TEST WITH PATIENT
+            //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
+        });
+
+          findViewById(R.id.btn_start_vision).setOnClickListener(v -> {
+            requestMHTest(buildTestPatient(), Const.TEST.VISION); //REQUEST TEST WITH PATIENT
+            //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
+        });
+
         //HANDLE NEW INTENT
         onNewIntent(getIntent());
     }
@@ -80,11 +101,11 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         }
     }
 
-    private void requestMHTest(@Nullable Patient patient) {
+    private void requestMHTest(@Nullable Patient patient, Const.TEST testType) {
         //GENERATE UNIQUE 24 CHAR TEST ID
         String testId = NiftyUtil.INSTANCE.getRandomSequence();
         //BUILD TEST REQUEST
-        Log.d(TAG, "TEST INDEX  " + String.valueOf(Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARSPEECH).getValue()));
+        Log.d(TAG, "TEST INDEX  " + String.valueOf(testType));
         MHealthTestRequest testRequest =
                 MHealthTestRequest.build(
                         testId, //UNIQUE TEST ID
@@ -92,7 +113,7 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
                         patient, //PATIENT OBJECT OR NULL
                         //REPLACE TEST_TYPE WITH THE TEST
                         //REQUIRED TEST( Const.INSTANCE.getAppIndexFromTest(Const.TEST.TEST_TYPE))
-                        Const.INSTANCE.getAppIndexFromTest(Const.TEST.HEARSPEECH).getValue());
+                        testType);
         //UTILITY TO HELP YOU VALIDATE YOUR TEST REQUEST
         String requestValidationResponse = Util.validateTestRequest(IntegrationViaIntentActivity.this, testRequest);
         if(requestValidationResponse==null)
@@ -108,6 +129,9 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         Timber.d("onRetrieveTestHearScreen");
         Timber.d("hearscreenTest:" + hearscreenTest.toJson());
         Timber.d("generatedPatientId: " + hearscreenTest.getPatientUuid());
+
+        tvReturnedData.setText(hearscreenTest.toJson());
+
         if(hearscreenTest.getPatientUuid()!=null)
             TestRequestHelper.INSTANCE.retrievePatient(
                     IntegrationViaIntentActivity.this,
@@ -121,6 +145,8 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         Timber.d( "onRetrieveTestHearTest");
         Timber.d( "heartestTest:"+heartestTest.toJson());
         Timber.d( "generatedPatientId: "+heartestTest.getPatientUuid());
+
+       tvReturnedData.setText(heartestTest.toJson());
         if(heartestTest.getPatientUuid()!=null) {
             TestRequestHelper.INSTANCE.retrievePatient(
                     IntegrationViaIntentActivity.this,
@@ -135,6 +161,9 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         Timber.d( "onRetrieveTestPeekAcuity");
         Timber.d( "vulaVisionTest:"+vulaVisionTest.Companion.toJson());
         Timber.d( "generatedPatientId: "+vulaVisionTest.getPatientUuid());
+
+        tvReturnedData.setText(vulaVisionTest.Companion.toJson());
+
         if(vulaVisionTest.getPatientUuid()!=null)
             TestRequestHelper.INSTANCE.retrievePatient(
                     IntegrationViaIntentActivity.this,
@@ -145,9 +174,12 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
 
     @Override
     public void onRetrieveTestHearSpeech(HearspeechTest hearspeechTest) {
-        Timber.d( "onRetrieveTestPeekAcuity");
+        Timber.d( "onRetrieveTestHearSpeech");
         Timber.d( "hearspeechTest:"+hearspeechTest.Companion.toJson());
         Timber.d( "generatedPatientId: "+hearspeechTest.getPatientUuid());
+
+        tvReturnedData.setText(hearspeechTest.Companion.toJson());
+
         if(hearspeechTest.getPatientUuid()!=null)
             TestRequestHelper.INSTANCE.retrievePatient(
                     IntegrationViaIntentActivity.this,
@@ -159,7 +191,18 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
     @Override
     public void onRetrieveTestHearRisk(HearriskTest hearriskTest) {
 
-        
+        Timber.d( "onRetrieveTestPeekAcuity");
+        Timber.d( "hearRiskTest:"+hearriskTest.Companion.toJson());
+        Timber.d( "generatedPatientId: "+hearriskTest.getPatientUuid());
+
+        tvReturnedData.setText(hearriskTest.Companion.toJson());
+
+        if(hearriskTest.getPatientUuid()!=null)
+            TestRequestHelper.INSTANCE.retrievePatient(
+                    IntegrationViaIntentActivity.this,
+                    getLoaderManager(),
+                    IntegrationViaIntentActivity.this,
+                    hearriskTest.getPatientUuid());
     }
 
     @Override

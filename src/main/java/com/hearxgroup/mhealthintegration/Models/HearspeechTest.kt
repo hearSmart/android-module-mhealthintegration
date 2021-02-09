@@ -7,19 +7,24 @@ import com.hearxgroup.orbit.logic.Const.CODE_UNSET
 
 class HearspeechTest {
 
-
-    private val version = 0
+    private val version = 1
 
     //TEST IDs
     @SerializedName("id")
-    private val id: Long? = null
+    var id: Long? = null
     @SerializedName("server_id")
     var serverId : Long = Const.CODE_UNSET_LONG
+
+    @SerializedName("memberId")
+    var serverMemberId: Long? = null
+
     @SerializedName("patient_id")
     var patientId: Long= Const.CODE_UNSET_LONG
     @SerializedName("facility_id")
     var facilityId: Long= Const.CODE_UNSET_LONG
 
+    @SerializedName("adminId")
+    var adminId: Long? = null
     var uuid : String = ""
     @SerializedName("headset_id")
     var headsetId: Long= Const.CODE_UNSET_LONG
@@ -91,6 +96,9 @@ class HearspeechTest {
     var retest: Boolean = false
     var state : Int? = null
 
+    @SerializedName("last_upload_attempt")
+    private val lastUploadAttempt: Long? = null
+
     @SerializedName("patient_pta_left")
     var patientPtaLeft: Double? = null
     @SerializedName("patient_pta_right")
@@ -141,22 +149,22 @@ class UCLResult {
     )
 }
 
-class DinSubtest {
+data class DinSubtest(
 
-    var triplets: List<DigitTriplet>? = emptyList()
-    var state : Int ?= com.hearxgroup.mhealth.resources.Const.TEST_STATE_INCOMPLETE
-    var result_srt : List<Double>? = null
-    var result_message : String = ""
-    var duration : Int = CODE_UNSET
-    var norm_dataset: String ?= ""
-    var norm_group: String ?= ""
-    var norm_srt_p10: Double = Const.CODE_UNSET_DOUBLE
-    var norm_srt_p50: Double = Const.CODE_UNSET_DOUBLE
-    var norm_srt_p90: Double = Const.CODE_UNSET_DOUBLE
-    var mean_response_time: Double? = Const.CODE_UNSET_DOUBLE
-    var std_dev_response_time: Double? = Const.CODE_UNSET_DOUBLE
-    var volume: Int = CODE_UNSET
-
+        var triplets: List<DigitTriplet>? = emptyList(),
+        var state: Int? = com.hearxgroup.mhealth.resources.Const.TEST_STATE_INCOMPLETE,
+        var result_srt: List<Double>? = null,
+        var result_message: String = "",
+        var duration: Int = CODE_UNSET,
+        var norm_dataset: String? = "",
+        var norm_group: String? = "",
+        var norm_srt_p10: Double = Const.CODE_UNSET_DOUBLE,
+        var norm_srt_p50: Double = Const.CODE_UNSET_DOUBLE,
+        var norm_srt_p90: Double = Const.CODE_UNSET_DOUBLE,
+        var mean_response_time: Double? = Const.CODE_UNSET_DOUBLE,
+        var std_dev_response_time: Double? = Const.CODE_UNSET_DOUBLE,
+        var volume: Int = CODE_UNSET)
+{
     data class DigitTriplet(
             val presented: String,
             val responded: String,
@@ -167,4 +175,3 @@ class DinSubtest {
             val protocol_test_index: Int? = 0)
 
 }
-

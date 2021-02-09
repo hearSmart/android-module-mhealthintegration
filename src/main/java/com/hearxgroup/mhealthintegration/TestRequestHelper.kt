@@ -26,7 +26,6 @@ import com.hearxgroup.mhealth.resources.Const.PROVIDER_CODE_TEST_HEARTEST
 import com.hearxgroup.mhealth.resources.Const.PROVIDER_CODE_TEST_VISION
 import com.hearxgroup.mhealth.resources.Const.getAppIndexFromTest
 import com.hearxgroup.mhealthintegration.Const.BUNDLE_EXTRA_MHTEST_REQUEST_JSON
-import com.hearxgroup.mhealthintegration.Const.INDEX_HEARSPEECH
 import com.hearxgroup.orbit.logic.Const.CODE_UNSET
 
 /**
@@ -67,7 +66,7 @@ object TestRequestHelper {
             INDEX_HEARSPEECH -> providerCode = PROVIDER_CODE_TEST_HEARSPEECH
             INDEX_HEARRISK -> providerCode = PROVIDER_CODE_TEST_HEARRISK
         }
-        Log.d("PROVIDER_CODE", testIndex.toString() + " " +  providerCode.toString())
+        Log.d("PROVIDER_CODE ->", testIndex.toString() + " " +  providerCode.toString())
         MHealthContentRetriever(context, loaderManager, callback).startPoll(providerCode, generatedId)
     }
 

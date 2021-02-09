@@ -53,8 +53,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 2005
-        versionName "2005"
+        versionCode 2006
+        versionName "2006-dev"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -73,6 +73,13 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            //outputFileName = new File(outputFileName.replace(".apk", "-${defaultConfig.versionName}.apk"))
+            outputFileName = new File("android-module-mhealthintegration-release-v${defaultConfig.versionName}-vc${defaultConfig.versionCode}.aar")
+        }
     }
 }
 

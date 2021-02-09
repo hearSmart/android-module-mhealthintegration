@@ -12,14 +12,15 @@ android {
         applicationId "com.hearxgroup.integrationtest"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1009
-        versionName "1009"
+        versionCode 1010
+        versionName "1010"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
 
     packagingOptions {
-        pickFirst  'META-INF/*'
+        exclude  'META-INF/MANIFEST.MF'
+        exclude  'META-INF/build_release.kotlin_module'
     }
 
     buildTypes {
@@ -48,5 +49,5 @@ dependencies {
 
     //REQUIRED LIBRARIES
     //implementation 'com.github.hearSmart:android-module-mhealthintegration:v2004'
-    implementation(name: 'mHealthIntegrationLib-V32-release', ext: 'aar') {transitive = true}
+    implementation(name: 'android-module-mhealthintegration-release-v2006-dev-vc2006', ext: 'aar') {transitive = true}
 }

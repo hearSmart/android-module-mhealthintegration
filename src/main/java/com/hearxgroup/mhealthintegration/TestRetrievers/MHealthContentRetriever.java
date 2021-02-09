@@ -119,7 +119,6 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
     private void returnContent(int testType, String dataJson) {
         //Timber.d("testType / dataJson ->" + testType +" / " + dataJson);
         Log.d(TAG, "testType " + testType + " / dataJson" + dataJson);
-
         switch(testType) {
             case Const.PROVIDER_CODE_TEST_HEARSCREEN:
                 if(dataJson!=null && dataJson.length()>0) {
