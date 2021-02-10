@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.Facility;
 import com.hearxgroup.mhealthintegration.Models.HearriskTest;
@@ -49,28 +50,33 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         tvReturnedData = findViewById(R.id.txt_retrieved_data);
 
         findViewById(R.id.btn_start_heartest).setOnClickListener(v -> {
-            requestMHTest(buildTestPatient(), Const.TEST.HEARTEST); //REQUEST TEST WITH PATIENT
+            requestMHTest(buildTestPatient(), Const.TEST.HEARTEST);//REQUEST TEST WITH PATIENT
+            finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
 
         findViewById(R.id.btn_start_hearscreen).setOnClickListener(v -> {
             requestMHTest(buildTestPatient(), Const.TEST.HEARSCREEN); //REQUEST TEST WITH PATIENT
+            finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
 
       findViewById(R.id.btn_start_hearspeech).setOnClickListener(v -> {
             requestMHTest(buildTestPatient(), Const.TEST.HEARSPEECH); //REQUEST TEST WITH PATIENT
+          finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
 
           findViewById(R.id.btn_start_vision).setOnClickListener(v -> {
             requestMHTest(buildTestPatient(), Const.TEST.VISION); //REQUEST TEST WITH PATIENT
+              finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
 
         //HANDLE NEW INTENT
         onNewIntent(getIntent());
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -157,12 +163,12 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
     }
 
     @Override
-    public void onRetrieveTestPeekAcuity(VulaVisionTest vulaVisionTest) {
-        Timber.d( "onRetrieveTestPeekAcuity");
+    public void onRetrieveTestVulaVision(VulaVisionTest vulaVisionTest) {
+        Timber.d( "onRetrieveTestVulaVision");
         Timber.d( "vulaVisionTest:"+vulaVisionTest.Companion.toJson());
         Timber.d( "generatedPatientId: "+vulaVisionTest.getPatientUuid());
 
-        tvReturnedData.setText(vulaVisionTest.Companion.toJson());
+        tvReturnedData.setText(new Gson().toJson(vulaVisionTest));
 
         if(vulaVisionTest.getPatientUuid()!=null)
             TestRequestHelper.INSTANCE.retrievePatient(
@@ -174,11 +180,11 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
 
     @Override
     public void onRetrieveTestHearSpeech(HearspeechTest hearspeechTest) {
-        Timber.d( "onRetrieveTestHearSpeech");
-        Timber.d( "hearspeechTest:"+hearspeechTest.Companion.toJson());
-        Timber.d( "generatedPatientId: "+hearspeechTest.getPatientUuid());
+        tvReturnedData.setText(new Gson().toJson(hearspeechTest));
 
-        tvReturnedData.setText(hearspeechTest.Companion.toJson());
+        Log.d("retrievehearSpeech", "onRetrieveTestHearSpeech");
+        Log.d( "hearspeechTest:", hearspeechTest.Companion.toJson());
+        Log.d( "generatedPatientId: ", hearspeechTest.getPatientUuid());
 
         if(hearspeechTest.getPatientUuid()!=null)
             TestRequestHelper.INSTANCE.retrievePatient(
@@ -191,7 +197,7 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
     @Override
     public void onRetrieveTestHearRisk(HearriskTest hearriskTest) {
 
-        Timber.d( "onRetrieveTestPeekAcuity");
+        Timber.d( "onRetrieveTestHearRisk");
         Timber.d( "hearRiskTest:"+hearriskTest.Companion.toJson());
         Timber.d( "generatedPatientId: "+hearriskTest.getPatientUuid());
 

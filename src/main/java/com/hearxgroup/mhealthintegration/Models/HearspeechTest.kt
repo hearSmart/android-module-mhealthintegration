@@ -1,5 +1,6 @@
 package com.hearxgroup.mhealthintegration.Models
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.hearxgroup.orbit.logic.Const

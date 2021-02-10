@@ -24,7 +24,7 @@ public class MHealthTestRetrieverContract {
     public interface ContentRetrieverInterface {
         void onRetrieveTestHearScreen(HearscreenTest test);
         void onRetrieveTestHearTest(HeartestTest test);
-        void onRetrieveTestPeekAcuity(VulaVisionTest test);
+        void onRetrieveTestVulaVision(VulaVisionTest test);
         void onRetrieveTestHearSpeech(HearspeechTest test);
         void onRetrieveTestHearRisk(HearriskTest test);
         void onRetrievePatient(Patient patient);

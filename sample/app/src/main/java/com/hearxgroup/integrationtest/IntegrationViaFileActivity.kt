@@ -55,7 +55,7 @@ class IntegrationViaFileActivity : AppCompatActivity() {
         }
         //ONCLICK LISTENER FOR REQUESTING A TEST
         findViewById<View>(R.id.btn_test).setOnClickListener { v: View? ->
-            requestMHTest(buildTestPatient()) //REQUEST TEST WITH PATIENT
+            requestMHTest(buildTestPatient(), TEST.HEARTEST) //REQUEST TEST WITH PATIENT
         }
         //HANDLE NEW INTENT
         onNewIntent(intent)
@@ -102,7 +102,7 @@ class IntegrationViaFileActivity : AppCompatActivity() {
         } else Timber.d("file does not exist")
     }
 
-    private fun requestMHTest(patient: Patient?) {
+    private fun requestMHTest(patient: Patient?, testType: Const.TEST ) {
         //GENERATE UNIQUE 24 CHAR TEST ID
         val testId = randomSequence
         //BUILD TEST REQUEST
@@ -113,7 +113,7 @@ class IntegrationViaFileActivity : AppCompatActivity() {
                 //PATIENT OBJECT OR NULL
                 //REPLACE TEST_TYPE WITH THE TEST
                 //REQUIRED TEST( Const.INSTANCE.getAppIndexFromTest(Const.TEST.TEST_TYPE))
-                getAppIndexFromTest(TEST.HEARTEST).value)
+                testType)
 
         //RETRIEVE THE REQUESTED TEST PATH CONSTANT FROM THE HEARX LIB
         val filePath: String = getTestRequestPath()!!

@@ -81,10 +81,9 @@ public class Util {
     }
 
     public static HearspeechTest buildHearSpeechTestFromJson(String jsonData){
-        Log.d("HearSpeechTest Build", "JsonData HearSpeech= " + jsonData);
-        HearspeechTest test = HearspeechTest.Companion.fromJson(jsonData);
+        Log.d("spee", "JsonData= " + jsonData);
 
-        return test;
+        return HearspeechTest.Companion.fromJson(jsonData);
     }
 
     public static HearriskTest buildHearRiskTestFromJson(String jsonData){

@@ -78,7 +78,7 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
         //data = context.getContentResolver().query(contentUri, null, null, null, null);
         if (data != null && data.getCount() > 0) {
             data.moveToFirst();
-            Boolean testNotFound = data.getString(1).equalsIgnoreCase(PROVIDER_DATA_NOT_FOUND);
+            boolean testNotFound = data.getString(1).equalsIgnoreCase(PROVIDER_DATA_NOT_FOUND);
             if(testNotFound){
                 Log.d(TAG,"TestNotFound");
             }
@@ -103,7 +103,7 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
     private String getProvider(int providerCode) {
         Log.d(TAG, "getProvider");
         Log.d(TAG, "providerCode:"+providerCode);
-        Log.d(TAG, "PROVIDER_CODE_GET_PROVIDER" + String.valueOf(providerCode));
+        Log.d(TAG, "PROVIDER_CODE_GET_PROVIDER -> " + String.valueOf(providerCode));
         switch(providerCode) {
             case Const.PROVIDER_CODE_TEST_HEARSCREEN: return Const.PROVIDER_NAME_TEST_HEARSCREEN;
             case Const.PROVIDER_CODE_TEST_HEARTEST: return Const.PROVIDER_NAME_TEST_HEARTEST;
@@ -142,7 +142,7 @@ public class MHealthContentRetriever implements LoaderManager.LoaderCallbacks<Cu
                 break;
             case Const.PROVIDER_CODE_TEST_VISION:
                 if(dataJson!=null && dataJson.length()>0) {
-                    listener.onRetrieveTestPeekAcuity(Util.buildVulaVisionTestFromJson(dataJson));
+                    listener.onRetrieveTestVulaVision(Util.buildVulaVisionTestFromJson(dataJson));
                 }
                 break;
             case  Const.PROVIDER_CODE_PATIENT:

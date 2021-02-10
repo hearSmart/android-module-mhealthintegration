@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MHealthTestRetrie
     }
 
     @Override
-    public void onRetrieveTestPeekAcuity(PeekAcuityTest peekAcuityTest) {
+    public void onRetrieveTestVulaVision(PeekAcuityTest peekAcuityTest) {
     }
 
     @Override
