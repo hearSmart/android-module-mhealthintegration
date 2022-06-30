@@ -10,7 +10,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.hearxgroup.integrationtest"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1010
         versionName "1010"
@@ -43,10 +43,20 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 
     implementation 'com.android.support:multidex:1.0.3'
-
-    implementation 'com.github.hearSmart:android-module-mhealth-resources:v1.8'
-    implementation 'com.github.hearSmart:android-module-orbit-logic:v1.7'
-
+    //MATERIAL DESIGN
+    api "com.google.android.material:material:1.4.0"
+    //MATERIAL DIALOGS
+    api 'com.afollestad.material-dialogs:core:3.3.0'
+    api 'com.afollestad.material-dialogs:input:3.3.0'
+    //JODA TIME
+    implementation 'joda-time:joda-time:2.10.9'
+   /* implementation 'com.github.hearSmart:android-module-mhealth-resources:v1.8'
+    implementation 'com.github.hearSmart:android-module-orbit-logic:v1.7'*/
+    implementation(name: 'android-module-orbit-logic-v1.9-vc108', ext: 'aar')
+    implementation(name: 'android-module-mhealth-resources-v1.9-dev-vc27', ext: 'aar')
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.8'
     //REQUIRED LIBRARIES
     //implementation 'com.github.hearSmart:android-module-mhealthintegration:v2004'
     implementation(name: 'android-module-mhealthintegration-release-v2006-dev-vc2008', ext: 'aar') {transitive = true}

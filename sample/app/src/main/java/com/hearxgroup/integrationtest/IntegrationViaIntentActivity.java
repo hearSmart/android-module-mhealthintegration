@@ -8,26 +8,28 @@ package com.hearxgroup.integrationtest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
+import com.hearxgroup.mhealth.resources.Const;
 import com.hearxgroup.mhealthintegration.Contracts.MHealthTestRetrieverContract;
 import com.hearxgroup.mhealthintegration.Models.Facility;
 import com.hearxgroup.mhealthintegration.Models.HearriskTest;
-import com.hearxgroup.mhealthintegration.Models.HearspeechTest;
-import com.hearxgroup.mhealthintegration.Models.VulaVisionTest;
-import com.hearxgroup.mhealthintegration.NiftyUtil;
 import com.hearxgroup.mhealthintegration.Models.HearscreenTest;
+import com.hearxgroup.mhealthintegration.Models.HearspeechTest;
 import com.hearxgroup.mhealthintegration.Models.HeartestTest;
 import com.hearxgroup.mhealthintegration.Models.MHealthTestRequest;
 import com.hearxgroup.mhealthintegration.Models.Patient;
+import com.hearxgroup.mhealthintegration.Models.VulaVisionTest;
+import com.hearxgroup.mhealthintegration.NiftyUtil;
 import com.hearxgroup.mhealthintegration.TestRequestHelper;
 import com.hearxgroup.mhealthintegration.Util;
+
 import timber.log.Timber;
-import com.hearxgroup.mhealth.resources.Const;
 
 /**
  * Created by David Howe
@@ -47,6 +49,10 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
         setContentView(R.layout.activity_integration_via_intent);
         //ONCLICK LISTENER FOR REQUESTING A TEST
 
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+
         tvReturnedData = findViewById(R.id.txt_retrieved_data);
 
         findViewById(R.id.btn_start_heartest).setOnClickListener(v -> {
@@ -55,7 +61,7 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
         });
 
-        findViewById(R.id.btn_start_hearscreen).setOnClickListener(v -> {
+        /*findViewById(R.id.btn_start_hearscreen).setOnClickListener(v -> {
             requestMHTest(buildTestPatient(), Const.TEST.HEARSCREEN); //REQUEST TEST WITH PATIENT
             finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
@@ -71,7 +77,7 @@ public class IntegrationViaIntentActivity extends AppCompatActivity implements M
             requestMHTest(buildTestPatient(), Const.TEST.VISION); //REQUEST TEST WITH PATIENT
               finish();
             //requestMHTest(null); //REQUEST TEST WITH NO PATIENT
-        });
+        });*/
 
         //HANDLE NEW INTENT
         onNewIntent(getIntent());

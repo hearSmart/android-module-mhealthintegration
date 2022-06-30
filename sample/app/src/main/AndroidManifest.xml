@@ -8,6 +8,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hearxgroup.integrationtest">
 
+    <queries>
+        <package android:name="com.hearxgroup.mhealthstudio"/>
+        <package android:name="com.hearxgroup.integrationtest"/>
+    </queries>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
